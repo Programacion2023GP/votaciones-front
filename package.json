@@ -1,0 +1,71 @@
+{
+   "name": "votaciones-front",
+   "private": true,
+   "version": "0.0.0",
+   "type": "module",
+   "engines": {
+      "node": ">=22"
+   },
+   "scripts": {
+      "dev": "vite",
+      "build": "tsc -b && vite build",
+      "lint": "eslint .",
+      "preview": "vite preview"
+   },
+   "dependencies": {
+      "@tailwindcss/vite": "^4.2.2",
+      "await-to-js": "^3.0.0",
+      "axios": "^1.13.6",
+      "daisyui": "^5.5.19",
+      "dayjs": "^1.11.20",
+      "file-saver": "^2.0.5",
+      "formik": "^2.4.9",
+      "framer-motion": "^12.38.0",
+      "html2canvas": "^1.4.1",
+      "jspdf": "^4.2.1",
+      "jspdf-autotable": "^5.0.7",
+      "laravel-echo": "^2.2.7",
+      "notistack": "^3.0.2",
+      "primeicons": "^7.0.0",
+      "primereact": "^10.9.7",
+      "pusher-js": "^8.4.0",
+      "react": "^19.2.4",
+      "react-device-detect": "^2.2.3",
+      "react-dom": "^19.2.4",
+      "react-dropzone": "^14.3.8",
+      "react-icons": "^5.6.0",
+      "react-router-dom": "^7.13.1",
+      "react-select": "^5.10.2",
+      "react-signature-canvas": "^1.1.0-alpha.2",
+      "react-tailwindcss-select": "^1.8.5",
+      "recharts": "^3.8.0",
+      "rxjs": "^7.8.2",
+      "sweetalert2": "^11.26.23",
+      "sweetalert2-react-content": "^5.1.2",
+      "tailwind-merge": "^3.5.0",
+      "tailwindcss": "^4.2.2",
+      "tailwindcss-animate": "^1.0.7",
+      "vite-plugin-pwa": "^0.19.8",
+      "xlsx": "^0.18.5",
+      "xlsx-js-style": "^1.2.0",
+      "yup": "^1.7.1",
+      "zustand": "^5.0.12"
+   },
+   "devDependencies": {
+      "@eslint/js": "^9.39.4",
+      "@types/node": "^25.5.0",
+      "@types/react": "^19.2.14",
+      "@types/react-dom": "^19.2.3",
+      "@vitejs/plugin-react": "^6.0.1",
+      "eslint": "^9.39.4",
+      "eslint-plugin-react-hooks": "^7.0.1",
+      "eslint-plugin-react-refresh": "^0.5.2",
+      "globals": "^17.4.0",
+      "typescript": "~5.9.3",
+      "typescript-eslint": "^8.57.1",
+      "vite": "npm:rolldown-vite@7.3.1"
+   },
+   "overrides": {
+      "vite": "npm:rolldown-vite@7.3.1"
+   }
+}

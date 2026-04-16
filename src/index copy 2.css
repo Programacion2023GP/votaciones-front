@@ -1,0 +1,1873 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Outfit:wght@100..900&display=swap");
+
+@import "tailwindcss";
+@plugin "daisyui" {
+   themes: gobierno --default;
+}
+
+@theme {
+   --color-guinda-primary: #9b2242;
+   --color-guinda-secondary: #651d32;
+   --color-gris-cool: #474c55;
+   --color-gris: #727372;
+   --color-gris-claro: #b8b6af;
+   --color-negro: #130d0e;
+
+   --font-family-humanist: "Zapf Humanist 601 BT", Georgia, serif;
+   --font-family-avenir: "Montserrat", Avenir, sans-serif;
+   --font-playfair: "Playfair Display", serif;
+   --font-nunito: "Barlow", sans-serif;
+}
+
+@plugin "daisyui/theme" {
+   name: "gobierno";
+   default: true;
+   --color-primary: #9b2242;
+   --color-primary-content: #ffffff;
+   --color-secondary: #651d32;
+   --color-secondary-content: #ffffff;
+   --color-accent: #474c55;
+   --color-accent-content: #ffffff;
+   --color-neutral: #727372;
+   --color-neutral-content: #ffffff;
+   --color-base-100: #ffffff;
+   --color-base-200: #f8f7f5;
+   --color-base-300: #b8b6af;
+   --color-base-content: #130d0e;
+   --color-info: #474c55;
+   --color-success: #2e7d32;
+   --color-warning: #ed6c02;
+   --color-error: #d32f2f;
+   --radius-selector: 0.5rem;
+   --radius-field: 0.5rem;
+   --radius-box: 1rem;
+}
+
+@layer base {
+   body {
+      /* @apply font-nunito bg-blanco text-negro min-h-screen; */
+      background-image:
+         radial-gradient(circle at 15% 85%, rgba(155, 34, 66, 0.06) 0%, transparent 50%),
+         radial-gradient(circle at 85% 15%, rgba(101, 29, 50, 0.05) 0%, transparent 50%),
+         url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239B2242' fill-opacity='0.022'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+   }
+}
+
+/* ============================================================
+   PREFIJO PERSONALIZABLE
+   ============================================================
+   Todas las clases usan el prefijo "gob-". 
+   Si deseas otro prefijo, reemplaza "gob-" por el tuyo.
+   ============================================================ */
+
+/* ============================================================
+   VARIABLES Y RESET
+   ============================================================ */
+:root {
+   --gob-guinda: #9b2242;
+   --gob-guinda-dark: #651d32;
+   --gob-gris-cool: #474c55;
+   --gob-gris: #727372;
+   --gob-gris-claro: #b8b6af;
+   --gob-negro: #130d0e;
+   --gob-blanco: #fafaf8;
+   --gob-superficie: #f5f3ef;
+   --gob-sidebar-w: 260px;
+   --gob-header-h: 62px;
+   --gob-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   font-family: "Nunito Sans", sans-serif;
+   background: var(--gob-blanco);
+   color: var(--gob-negro);
+   min-height: 100vh;
+   overflow-x: hidden;
+}
+
+/* Fondo con patrón – usado en body global */
+body::before {
+   content: "";
+   position: fixed;
+   inset: 0;
+   pointer-events: none;
+   z-index: 0;
+   background-image:
+      radial-gradient(circle at 15% 85%, rgba(155, 34, 66, 0.06) 0%, transparent 50%), radial-gradient(circle at 85% 15%, rgba(101, 29, 50, 0.05) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239B2242' fill-opacity='0.022'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   TOPBAR – Usado en Topbar.tsx
+   ============================================================ */
+.gob-topbar {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: var(--gob-header-h);
+   background: var(--gob-guinda-dark);
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 24px;
+   z-index: 200;
+   box-shadow: 0 2px 20px rgba(19, 13, 14, 0.35);
+}
+.gob-topbar-brand {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+}
+.gob-topbar-emblem {
+   width: 38px;
+   height: 38px;
+   background: var(--gob-guinda);
+   border-radius: 8px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 18px;
+}
+.gob-topbar-title {
+   font-family: "Playfair Display", serif;
+   font-size: 1.05rem;
+   font-weight: 700;
+   color: #fff;
+   line-height: 1.2;
+}
+.gob-topbar-subtitle {
+   font-size: 0.68rem;
+   color: rgba(255, 255, 255, 0.6);
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+}
+.gob-user-menu {
+   position: relative;
+}
+.gob-user-btn {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   background: rgba(255, 255, 255, 0.1);
+   border: 1px solid rgba(255, 255, 255, 0.15);
+   border-radius: 40px;
+   padding: 6px 14px 6px 6px;
+   cursor: pointer;
+   transition: background 0.2s;
+   color: #fff;
+}
+.gob-user-btn:hover {
+   background: rgba(255, 255, 255, 0.18);
+}
+.gob-user-avatar {
+   width: 30px;
+   height: 30px;
+   background: var(--gob-guinda);
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 0.75rem;
+   font-weight: 700;
+   color: #fff;
+}
+.gob-user-name {
+   font-size: 0.82rem;
+   font-weight: 600;
+}
+.gob-user-dropdown {
+   position: absolute;
+   top: calc(100% + 8px);
+   right: 0;
+   background: #fff;
+   border: 1px solid rgba(0, 0, 0, 0.08);
+   border-radius: 12px;
+   box-shadow: 0 8px 32px rgba(19, 13, 14, 0.15);
+   min-width: 180px;
+   overflow: hidden;
+   animation: gob-fadeDown 0.15s ease;
+   z-index: 300;
+}
+.gob-dropdown-item {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   padding: 11px 16px;
+   font-size: 0.85rem;
+   cursor: pointer;
+   transition: background 0.15s;
+   color: var(--gob-negro);
+   border: none;
+   background: none;
+   width: 100%;
+   text-align: left;
+}
+.gob-dropdown-item:hover {
+   background: #f5f5f5;
+}
+.gob-dropdown-item.danger {
+   color: var(--gob-guinda);
+}
+.gob-dropdown-divider {
+   height: 1px;
+   background: #eee;
+}
+/* Animación de entrada para dropdown */
+@keyframes gob-fadeDown {
+   from {
+      opacity: 0;
+      transform: translateY(-8px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+
+/* ============================================================
+   SIDEBAR – Usado en Sidebar.tsx
+   ============================================================ */
+.gob-sidebar {
+   position: fixed;
+   top: var(--gob-header-h);
+   left: 0;
+   bottom: 0;
+   width: var(--gob-sidebar-w);
+   background: #fff;
+   border-right: 1px solid rgba(0, 0, 0, 0.07);
+   z-index: 100;
+   display: flex;
+   flex-direction: column;
+   padding: 20px 0;
+   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.04);
+   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gob-sidebar.collapsed {
+   transform: translateX(calc(-1 * var(--gob-sidebar-w)));
+}
+.gob-nav-section-label {
+   font-size: 0.65rem;
+   text-transform: uppercase;
+   letter-spacing: 0.12em;
+   color: var(--gob-gris-claro);
+   font-weight: 700;
+   padding: 8px 20px 4px;
+}
+.gob-nav-item {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   padding: 11px 20px;
+   cursor: pointer;
+   border-radius: 0 24px 24px 0;
+   margin-right: 12px;
+   transition: all 0.2s;
+   color: var(--gob-gris);
+   font-size: 0.875rem;
+   font-weight: 600;
+   position: relative;
+}
+.gob-nav-item:hover {
+   background: rgba(155, 34, 66, 0.06);
+   color: var(--gob-guinda);
+}
+.gob-nav-item.active {
+   background: rgba(155, 34, 66, 0.1);
+   color: var(--gob-guinda);
+}
+.gob-nav-item.active::before {
+   content: "";
+   position: absolute;
+   left: 0;
+   top: 4px;
+   bottom: 4px;
+   width: 3px;
+   background: var(--gob-guinda);
+   border-radius: 0 3px 3px 0;
+}
+.gob-nav-icon {
+   flex-shrink: 0;
+   opacity: 0.85;
+}
+
+/* ============================================================
+   MAIN LAYOUT – Usado en Layout.tsx
+   ============================================================ */
+.gob-layout {
+   margin-left: var(--gob-sidebar-w);
+   padding-top: var(--gob-header-h);
+   min-height: 100vh;
+   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+   position: relative;
+   z-index: 1;
+}
+.gob-layout.sidebar-collapsed {
+   margin-left: 0;
+}
+.gob-page-container {
+   padding: 32px 36px;
+   max-width: 1280px;
+}
+
+/* ============================================================
+   PAGE HEADER – Usado en todas las páginas
+   ============================================================ */
+.gob-page-header {
+   margin-bottom: 28px;
+   animation: gob-fadeUp 0.4s ease both;
+   display: flex;
+   align-items: flex-start;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   gap: 16px;
+}
+.gob-page-header h1 {
+   font-family: "Playfair Display", serif;
+   font-size: 1.9rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+   line-height: 1.2;
+}
+.gob-page-header p {
+   font-size: 0.9rem;
+   color: var(--gob-gris);
+   margin-top: 4px;
+}
+.gob-page-divider {
+   height: 2px;
+   background: linear-gradient(90deg, var(--gob-guinda) 0%, transparent 70%);
+   margin: 12px 0 28px;
+   border-radius: 2px;
+}
+.gob-breadcrumb {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   font-size: 12px;
+   color: var(--gob-gris-claro);
+   margin-bottom: 6px;
+}
+.gob-breadcrumb span {
+   color: var(--gob-guinda);
+   font-weight: 600;
+}
+.gob-casilla-tag {
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+   padding: 4px 12px;
+   background: rgba(155, 34, 66, 0.08);
+   border: 1px solid rgba(155, 34, 66, 0.2);
+   border-radius: 20px;
+   font-size: 12px;
+   font-weight: 700;
+   color: var(--gob-guinda);
+}
+
+/* ============================================================
+   CARDS – Usado en formularios, tablas, perfil
+   ============================================================ */
+.gob-card {
+   background: #fff;
+   border-radius: 16px;
+   border: 1px solid rgba(0, 0, 0, 0.05);
+   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+   overflow: hidden;
+}
+.gob-card-header {
+   padding: 18px 24px;
+   border-bottom: 1px solid #f0f0f0;
+   background: var(--gob-guinda);
+   border-radius: 16px 16px 0 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.gob-card-header .gob-card-title-text {
+   color: #fff;
+   font-size: 15px;
+   font-weight: 700;
+   text-align: center;
+}
+.gob-card-body {
+   padding: 24px;
+}
+.gob-card-title-text {
+   font-family: "Playfair Display", serif;
+   font-size: 1.05rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+}
+
+/* ============================================================
+   FORMULARIOS – Inputs, selects, botones
+   ============================================================ */
+.gob-form-group {
+   margin-bottom: 20px;
+}
+.gob-form-label {
+   display: block;
+   font-size: 0.8rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.07em;
+   color: var(--gob-gris-cool);
+   margin-bottom: 7px;
+}
+.gob-form-input {
+   width: 100%;
+   padding: 13px 16px;
+   border: 2px solid var(--gob-gris-claro);
+   border-radius: 10px;
+   font-size: 0.95rem;
+   font-family: "Nunito Sans", sans-serif;
+   color: var(--gob-negro);
+   background: #fafaf8;
+   transition: all 0.2s;
+   outline: none;
+   letter-spacing: 0.03em;
+}
+.gob-form-input:focus {
+   border-color: var(--gob-guinda);
+   box-shadow: 0 0 0 4px rgba(155, 34, 66, 0.08);
+   background: #fff;
+}
+.gob-form-input.error {
+   border-color: #e53e3e;
+}
+.gob-form-error {
+   font-size: 0.78rem;
+   color: #e53e3e;
+   margin-top: 5px;
+   display: flex;
+   align-items: center;
+   gap: 4px;
+}
+
+/* Botón primario (submit) */
+.gob-btn-primary {
+   width: 100%;
+   padding: 14px;
+   background: linear-gradient(135deg, var(--gob-guinda) 0%, var(--gob-guinda-dark) 100%);
+   color: #fff;
+   border: none;
+   border-radius: 12px;
+   font-size: 0.95rem;
+   font-weight: 700;
+   font-family: "Nunito Sans", sans-serif;
+   cursor: pointer;
+   letter-spacing: 0.04em;
+   transition: all 0.25s;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
+   box-shadow: 0 4px 20px rgba(155, 34, 66, 0.3);
+}
+.gob-btn-primary:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 8px 28px rgba(155, 34, 66, 0.4);
+}
+.gob-btn-primary:active {
+   transform: translateY(0);
+}
+.gob-btn-primary:disabled {
+   opacity: 0.6;
+   cursor: not-allowed;
+   transform: none;
+}
+
+/* Botón secundario */
+.gob-btn-secondary {
+   padding: 10px 20px;
+   background: transparent;
+   color: var(--gob-guinda);
+   border: 1.5px solid var(--gob-guinda);
+   border-radius: 8px;
+   font-size: 13px;
+   font-weight: 700;
+   cursor: pointer;
+   transition: var(--gob-transition);
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+}
+.gob-btn-secondary:hover {
+   background: rgba(155, 34, 66, 0.05);
+   transform: translateY(-1px);
+}
+
+/* Botones pequeños */
+.gob-btn-sm {
+   padding: 7px 14px;
+   font-size: 12px;
+   font-weight: 700;
+   border-radius: 7px;
+   cursor: pointer;
+   border: none;
+   transition: var(--gob-transition);
+}
+.gob-btn-sm-primary {
+   background: var(--gob-guinda);
+   color: #fff;
+}
+.gob-btn-sm-primary:hover {
+   background: var(--gob-guinda-dark);
+}
+.gob-btn-sm-ghost {
+   background: var(--gob-superficie);
+   color: var(--gob-gris-cool);
+}
+.gob-btn-sm-ghost:hover {
+   background: rgba(184, 182, 175, 0.4);
+}
+.gob-btn-sm-danger {
+   background: rgba(231, 76, 60, 0.1);
+   color: #c0392b;
+}
+.gob-btn-sm-danger:hover {
+   background: rgba(231, 76, 60, 0.2);
+}
+
+/* ============================================================
+   SELECTOR DE DOCUMENTO (Registro de Participación)
+   ============================================================ */
+.gob-doc-selector {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 14px;
+   margin-bottom: 28px;
+}
+.gob-doc-option {
+   border: 2px solid var(--gob-gris-claro);
+   border-radius: 14px;
+   padding: 18px 16px;
+   cursor: pointer;
+   transition: all 0.25s;
+   text-align: center;
+   position: relative;
+   overflow: hidden;
+}
+.gob-doc-option::after {
+   content: "";
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(135deg, rgba(155, 34, 66, 0.06), transparent);
+   opacity: 0;
+   transition: opacity 0.25s;
+}
+.gob-doc-option:hover {
+   border-color: var(--gob-guinda);
+   transform: translateY(-2px);
+}
+.gob-doc-option.selected {
+   border-color: var(--gob-guinda);
+   background: rgba(155, 34, 66, 0.04);
+   box-shadow: 0 0 0 4px rgba(155, 34, 66, 0.08);
+}
+.gob-doc-option .opt-icon {
+   font-size: 2rem;
+   margin-bottom: 8px;
+   display: block;
+}
+.gob-doc-option .opt-label {
+   font-size: 0.82rem;
+   font-weight: 700;
+   color: var(--gob-gris-cool);
+   text-transform: uppercase;
+   letter-spacing: 0.06em;
+}
+.gob-doc-option .opt-sub {
+   font-size: 0.75rem;
+   color: var(--gob-gris);
+   margin-top: 3px;
+}
+.gob-selected-badge {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   width: 20px;
+   height: 20px;
+   background: var(--gob-guinda);
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+/* ============================================================
+   VISTA PREVIA DE DOCUMENTOS (INE / Carta Identidad)
+   ============================================================ */
+.gob-doc-preview {
+   animation: slideIn 0.35s ease;
+   margin-bottom: 24px;
+   display: flex;
+   flex-direction: column;
+}
+.gob-ine-card {
+   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+   border-radius: 16px;
+   padding: 20px;
+   color: #fff;
+   position: relative;
+   overflow: hidden;
+   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+   max-width: 400px;
+   margin: 0 auto;
+}
+.gob-ine-card::before,
+.gob-ine-card::after {
+   content: "";
+   position: absolute;
+   border-radius: 50%;
+}
+.gob-ine-card::before {
+   top: -30px;
+   right: -30px;
+   width: 120px;
+   height: 120px;
+   background: rgba(155, 34, 66, 0.2);
+}
+.gob-ine-card::after {
+   bottom: -20px;
+   left: 40px;
+   width: 80px;
+   height: 80px;
+   background: rgba(101, 29, 50, 0.2);
+}
+.gob-ine-header {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   margin-bottom: 14px;
+   position: relative;
+   z-index: 1;
+}
+.gob-ine-eagle {
+   font-size: 28px;
+}
+.gob-ine-title {
+   font-size: 9px;
+   text-transform: uppercase;
+   letter-spacing: 1.5px;
+   opacity: 0.8;
+}
+.gob-ine-stripe {
+   height: 3px;
+   background: linear-gradient(90deg, #c8102e, #fff, #006847);
+   margin-bottom: 14px;
+}
+.gob-ine-body {
+   display: grid;
+   grid-template-columns: 80px 1fr;
+   gap: 14px;
+   position: relative;
+   z-index: 1;
+}
+.gob-ine-photo {
+   width: 80px;
+   height: 96px;
+   background: rgba(255, 255, 255, 0.1);
+   border-radius: 8px;
+   border: 2px dashed rgba(255, 255, 255, 0.3);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 28px;
+}
+.gob-ine-field {
+   margin-bottom: 8px;
+}
+.gob-ine-field-label {
+   font-size: 8px;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   opacity: 0.5;
+   font-weight: 700;
+}
+.gob-ine-field-val {
+   font-size: 12px;
+   font-weight: 600;
+}
+.gob-ine-highlight {
+   background: rgba(155, 34, 66, 0.3);
+   border: 1px dashed rgba(255, 100, 100, 0.6);
+   border-radius: 6px;
+   padding: 6px 10px;
+   animation: gob-pulse 2s infinite;
+   margin-top: 10px;
+}
+@keyframes gob-pulse {
+   0%,
+   100% {
+      box-shadow: 0 0 0 0 rgba(155, 34, 66, 0.4);
+   }
+   50% {
+      box-shadow: 0 0 0 6px rgba(155, 34, 66, 0);
+   }
+}
+.gob-doc-card {
+   background: linear-gradient(135deg, #f8f4e8 0%, #f0ead4 100%);
+   border-radius: 16px;
+   padding: 20px;
+   border: 2px solid rgba(155, 34, 66, 0.15);
+   position: relative;
+   overflow: hidden;
+   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+   max-width: 400px;
+   margin: 0 auto;
+}
+.gob-doc-card::before {
+   content: "";
+   position: absolute;
+   inset: 0;
+   background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(155, 34, 66, 0.03) 10px, rgba(155, 34, 66, 0.03) 11px);
+}
+.gob-doc-card-header {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   padding-bottom: 14px;
+   border-bottom: 2px solid rgba(155, 34, 66, 0.15);
+   margin-bottom: 14px;
+}
+.gob-doc-seal {
+   font-size: 36px;
+}
+.gob-doc-institution {
+   font-size: 10px;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+   text-transform: uppercase;
+   letter-spacing: 1px;
+}
+.gob-doc-field {
+   margin-bottom: 10px;
+}
+.gob-doc-field-label {
+   font-size: 9px;
+   color: var(--gob-gris);
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   font-weight: 700;
+}
+.gob-doc-field-val {
+   font-size: 12px;
+   font-weight: 600;
+   color: var(--gob-negro);
+   border-bottom: 1px solid rgba(155, 34, 66, 0.2);
+   padding-bottom: 4px;
+}
+.gob-doc-highlight {
+   background: rgba(155, 34, 66, 0.08);
+   border: 2px dashed rgba(155, 34, 66, 0.4);
+   border-radius: 8px;
+   padding: 10px 12px;
+   animation: gob-pulse 2s infinite;
+}
+.gob-doc-highlight-label {
+   font-size: 9px;
+   color: var(--gob-guinda);
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   font-weight: 700;
+}
+.gob-doc-highlight-val {
+   font-size: 15px;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+}
+.gob-visual-arrow {
+   text-align: center;
+   color: var(--gob-guinda);
+   font-size: 0.78rem;
+   font-weight: 600;
+   padding: 8px 0 2px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 6px;
+}
+
+/* ============================================================
+   CASILLAS (Catálogo de centros de votación)
+   ============================================================ */
+.gob-grid-cards {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+   gap: 18px;
+}
+.gob-casilla-card {
+   background: #fff;
+   border-radius: 16px;
+   border: 1px solid rgba(0, 0, 0, 0.06);
+   padding: 22px;
+   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+   transition: all 0.25s;
+   animation: gob-fadeUp 0.4s ease both;
+}
+.gob-casilla-card:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 8px 30px rgba(155, 34, 66, 0.1);
+   border-color: rgba(155, 34, 66, 0.15);
+}
+.gob-casilla-num {
+   font-family: "Playfair Display", serif;
+   font-size: 2rem;
+   font-weight: 900;
+   color: var(--gob-guinda);
+   line-height: 1;
+}
+.gob-casilla-label {
+   font-size: 0.72rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: var(--gob-gris);
+   font-weight: 700;
+   margin-bottom: 10px;
+}
+.gob-casilla-encargado {
+   font-size: 0.9rem;
+   font-weight: 600;
+   color: var(--gob-negro);
+}
+.gob-casilla-loc {
+   font-size: 0.78rem;
+   color: var(--gob-gris);
+   margin-top: 2px;
+}
+.gob-casilla-stat {
+   display: flex;
+   gap: 12px;
+   margin-top: 14px;
+   padding-top: 14px;
+   border-top: 1px solid #f0f0f0;
+}
+.gob-stat-pill {
+   background: rgba(155, 34, 66, 0.06);
+   border-radius: 8px;
+   padding: 5px 10px;
+   font-size: 0.75rem;
+   font-weight: 600;
+   color: var(--gob-guinda);
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+
+/* Badges para tipo de casilla */
+.gob-badge-rural {
+   background: rgba(101, 29, 50, 0.1);
+   color: #9b2242;
+}
+.gob-badge-urbana {
+   background: rgba(71, 76, 85, 0.1);
+   color: #474c55;
+}
+.gob-badge-especial {
+   background: rgba(184, 182, 175, 0.1);
+   color: #b8b6af;
+}
+
+/* ============================================================
+   PARTICIPACIONES Y ESTADÍSTICAS
+   ============================================================ */
+.gob-stats-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+   gap: 16px;
+   margin-bottom: 28px;
+}
+.gob-stat-card {
+   background: #fff;
+   border-radius: 16px;
+   padding: 20px 22px;
+   border: 1px solid rgba(0, 0, 0, 0.05);
+   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+   animation: gob-fadeUp 0.4s ease both;
+   position: relative;
+   overflow: hidden;
+}
+.gob-stat-card::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 3px;
+   background: linear-gradient(90deg, var(--gob-guinda), var(--gob-guinda-dark));
+}
+.gob-stat-card-label {
+   font-size: 0.72rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: var(--gob-gris);
+   font-weight: 700;
+   margin-bottom: 6px;
+}
+.gob-stat-card-value {
+   font-family: "Playfair Display", serif;
+   font-size: 2.2rem;
+   font-weight: 900;
+   color: var(--gob-guinda-dark);
+   line-height: 1;
+}
+.gob-stat-card-sub {
+   font-size: 0.75rem;
+   color: var(--gob-gris);
+   margin-top: 4px;
+}
+.gob-chart-wrapper {
+   background: #fff;
+   border-radius: 16px;
+   padding: 24px;
+   border: 1px solid rgba(0, 0, 0, 0.05);
+   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+   margin-bottom: 20px;
+   animation: gob-fadeUp 0.5s ease both;
+}
+.gob-chart-title {
+   font-family: "Playfair Display", serif;
+   font-size: 1.1rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+   margin-bottom: 18px;
+}
+.gob-chart-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 20px;
+   margin-bottom: 24px;
+}
+.gob-chart-wrap {
+   position: relative;
+   height: 220px;
+}
+
+/* Tablas */
+.gob-table-wrapper {
+   background: #fff;
+   border-radius: 16px;
+   border: 1px solid rgba(0, 0, 0, 0.05);
+   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+   overflow: hidden;
+   animation: gob-fadeUp 0.55s ease both;
+}
+.gob-table-header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 18px 24px;
+   border-bottom: 1px solid #f0f0f0;
+}
+.gob-table-title {
+   font-family: "Playfair Display", serif;
+   font-size: 1.05rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+}
+.gob-filter-row {
+   display: flex;
+   gap: 10px;
+   padding: 14px 24px;
+   border-bottom: 1px solid #f5f5f5;
+   flex-wrap: wrap;
+}
+.gob-filter-select {
+   padding: 7px 12px;
+   border: 1px solid var(--gob-gris-claro);
+   border-radius: 8px;
+   font-family: "Nunito Sans", sans-serif;
+   font-size: 0.82rem;
+   color: var(--gob-gris-cool);
+   background: #fff;
+   cursor: pointer;
+   outline: none;
+   transition: border-color 0.2s;
+}
+.gob-filter-select:focus {
+   border-color: var(--gob-guinda);
+}
+.gob-filter-input {
+   padding: 7px 12px;
+   border: 1px solid var(--gob-gris-claro);
+   border-radius: 8px;
+   font-family: "Nunito Sans", sans-serif;
+   font-size: 0.82rem;
+   color: var(--gob-negro);
+   background: #fff;
+   outline: none;
+   transition: border-color 0.2s;
+   min-width: 180px;
+}
+.gob-filter-input:focus {
+   border-color: var(--gob-guinda);
+}
+.gob-table-wrap {
+   overflow-x: auto;
+}
+table {
+   width: 100%;
+   border-collapse: collapse;
+}
+thead th {
+   padding: 12px 20px;
+   text-align: left;
+   font-size: 0.7rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: var(--gob-gris);
+   font-weight: 700;
+   background: #fafaf8;
+   border-bottom: 1px solid #eee;
+}
+tbody tr {
+   border-bottom: 1px solid #f5f5f5;
+   transition: background 0.15s;
+}
+tbody tr:hover {
+   background: rgba(155, 34, 66, 0.025);
+}
+tbody td {
+   padding: 13px 20px;
+   font-size: 0.85rem;
+   color: var(--gob-negro);
+}
+.gob-badge {
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+   padding: 3px 10px;
+   border-radius: 20px;
+   font-size: 0.72rem;
+   font-weight: 700;
+}
+.gob-badge-ine {
+   background: rgba(15, 52, 96, 0.1);
+   color: #0f3460;
+}
+.gob-badge-doc {
+   background: rgba(155, 34, 66, 0.1);
+   color: var(--gob-guinda);
+}
+.gob-badge-active {
+   background: rgba(155, 34, 66, 0.1);
+   color: var(--gob-guinda);
+}
+.gob-badge-inactive {
+   background: var(--gob-superficie);
+   color: var(--gob-gris);
+}
+
+/* ============================================================
+   PERFIL DE USUARIO
+   ============================================================ */
+.gob-profile-header-card {
+   background: linear-gradient(135deg, var(--gob-guinda-dark), var(--gob-guinda));
+   border-radius: 16px;
+   padding: 32px;
+   color: #fff;
+   display: flex;
+   align-items: center;
+   gap: 24px;
+   margin-bottom: 24px;
+   position: relative;
+   overflow: hidden;
+}
+.gob-profile-avatar-big {
+   width: 80px;
+   height: 80px;
+   border-radius: 50%;
+   background: rgba(255, 255, 255, 0.2);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 32px;
+   font-weight: 700;
+   border: 3px solid rgba(255, 255, 255, 0.4);
+   flex-shrink: 0;
+}
+.gob-profile-name {
+   font-family: "Playfair Display", serif;
+   font-size: 26px;
+   margin-bottom: 4px;
+}
+.gob-profile-cargo {
+   font-size: 13px;
+   opacity: 0.7;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+}
+.gob-profile-casilla {
+   font-size: 14px;
+   opacity: 0.85;
+   margin-top: 6px;
+   font-weight: 600;
+}
+.gob-info-row {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 12px 0;
+   border-bottom: 1px solid rgba(184, 182, 175, 0.15);
+}
+.gob-info-row-label {
+   color: var(--gob-gris);
+   font-weight: 600;
+}
+.gob-info-row-val {
+   color: var(--gob-negro);
+   font-weight: 700;
+}
+
+/* ============================================================
+   BOLETA DE VOTACIÓN (módulo de votación)
+   ============================================================ */
+.gob-boleta-config {
+   background: #fff;
+   border-radius: 20px;
+   padding: 28px 32px;
+   border: 1px solid rgba(0, 0, 0, 0.06);
+   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+   margin-bottom: 28px;
+   animation: gob-fadeUp 0.35s ease both;
+}
+.gob-boleta-config-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 18px;
+   align-items: end;
+}
+.gob-config-field label {
+   display: block;
+   font-size: 0.72rem;
+   text-transform: uppercase;
+   letter-spacing: 0.09em;
+   font-weight: 700;
+   color: var(--gob-gris-cool);
+   margin-bottom: 7px;
+}
+.gob-config-input {
+   width: 100%;
+   padding: 11px 14px;
+   border: 2px solid var(--gob-gris-claro);
+   border-radius: 10px;
+   font-size: 0.92rem;
+   font-family: "Nunito Sans", sans-serif;
+   color: var(--gob-negro);
+   background: #fafaf8;
+   outline: none;
+   transition: all 0.2s;
+}
+.gob-config-input:focus {
+   border-color: var(--gob-guinda);
+   box-shadow: 0 0 0 3px rgba(155, 34, 66, 0.07);
+   background: #fff;
+}
+.gob-config-select {
+   width: 100%;
+   padding: 11px 14px;
+   border: 2px solid var(--gob-gris-claro);
+   border-radius: 10px;
+   font-size: 0.88rem;
+   font-family: "Nunito Sans", sans-serif;
+   color: var(--gob-negro);
+   background: #fafaf8;
+   outline: none;
+   cursor: pointer;
+   transition: all 0.2s;
+   appearance: none;
+   background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%23727372' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+   background-repeat: no-repeat;
+   background-position: right 14px center;
+   padding-right: 36px;
+}
+.gob-config-select:focus {
+   border-color: var(--gob-guinda);
+   box-shadow: 0 0 0 3px rgba(155, 34, 66, 0.07);
+}
+.gob-progress-step {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   position: relative;
+   flex: 1;
+}
+.gob-progress-step-circle {
+   width: 38px;
+   height: 38px;
+   border-radius: 50%;
+   border: 2px solid var(--gob-gris-claro);
+   background: #fff;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 0.82rem;
+   font-weight: 700;
+   color: var(--gob-gris);
+   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+   position: relative;
+   z-index: 1;
+}
+.gob-progress-step.done .gob-progress-step-circle {
+   background: var(--gob-guinda);
+   border-color: var(--gob-guinda);
+   color: #fff;
+   box-shadow: 0 0 0 4px rgba(155, 34, 66, 0.15);
+}
+.gob-progress-step.active .gob-progress-step-circle {
+   border-color: var(--gob-guinda);
+   color: var(--gob-guinda);
+   box-shadow: 0 0 0 4px rgba(155, 34, 66, 0.12);
+}
+.gob-progress-step-label {
+   font-size: 0.67rem;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.06em;
+   color: var(--gob-gris-claro);
+   margin-top: 6px;
+   transition: color 0.3s;
+}
+.gob-progress-step.active .gob-progress-step-label,
+.gob-progress-step.done .gob-progress-step-label {
+   color: var(--gob-guinda-dark);
+}
+.gob-progress-line {
+   flex: 1;
+   height: 2px;
+   background: var(--gob-gris-claro);
+   margin-bottom: 24px;
+   position: relative;
+   overflow: hidden;
+}
+.gob-progress-line-fill {
+   position: absolute;
+   left: 0;
+   top: 0;
+   bottom: 0;
+   background: var(--gob-guinda);
+   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gob-voter-id-card {
+   background: #fff;
+   border-radius: 20px;
+   padding: 32px 36px;
+   border: 1px solid rgba(0, 0, 0, 0.05);
+   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+   max-width: 560px;
+   animation: gob-fadeUp 0.4s ease both;
+}
+.gob-voter-badge {
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   background: rgba(155, 34, 66, 0.07);
+   border: 1px solid rgba(155, 34, 66, 0.15);
+   border-radius: 24px;
+   padding: 6px 14px;
+   font-size: 0.78rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+   margin-bottom: 18px;
+}
+.gob-ballot-search-wrap {
+   position: relative;
+   margin-bottom: 16px;
+}
+.gob-ballot-search-icon {
+   position: absolute;
+   left: 14px;
+   top: 50%;
+   transform: translateY(-50%);
+   color: var(--gob-gris-claro);
+}
+.gob-ballot-search-input {
+   width: 100%;
+   padding: 12px 16px 12px 42px;
+   border: 2px solid var(--gob-gris-claro);
+   border-radius: 12px;
+   font-family: "Nunito Sans", sans-serif;
+   font-size: 0.9rem;
+   color: var(--gob-negro);
+   background: #fafaf8;
+   outline: none;
+   transition: all 0.2s;
+}
+.gob-ballot-search-input:focus {
+   border-color: var(--gob-guinda);
+   background: #fff;
+   box-shadow: 0 0 0 3px rgba(155, 34, 66, 0.07);
+}
+.gob-projects-dropdown {
+   background: #fff;
+   border: 2px solid rgba(155, 34, 66, 0.15);
+   border-radius: 14px;
+   max-height: 240px;
+   overflow-y: auto;
+   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+   animation: gob-fadeDown 0.2s ease both;
+}
+.gob-project-option {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   padding: 11px 16px;
+   cursor: pointer;
+   transition: background 0.15s;
+   border-bottom: 1px solid #f5f5f5;
+}
+.gob-project-option:hover {
+   background: rgba(155, 34, 66, 0.04);
+}
+.gob-project-option.disabled {
+   opacity: 0.4;
+   cursor: not-allowed;
+   pointer-events: none;
+}
+.gob-project-option-num {
+   width: 28px;
+   height: 28px;
+   border-radius: 8px;
+   background: rgba(155, 34, 66, 0.08);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 0.72rem;
+   font-weight: 800;
+   color: var(--gob-guinda);
+}
+.gob-project-option-name {
+   font-size: 0.85rem;
+   font-weight: 600;
+   color: var(--gob-negro);
+   flex: 1;
+}
+.gob-project-option-cat {
+   font-size: 0.7rem;
+   color: var(--gob-gris);
+   background: #f5f5f4;
+   border-radius: 6px;
+   padding: 2px 7px;
+}
+.gob-votes-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+   gap: 14px;
+   margin-bottom: 24px;
+}
+.gob-vote-slot {
+   border: 2px dashed var(--gob-gris-claro);
+   border-radius: 16px;
+   padding: 16px 18px;
+   min-height: 90px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+   position: relative;
+}
+.gob-vote-slot.filled {
+   border: 2px solid rgba(155, 34, 66, 0.3);
+   background: linear-gradient(135deg, rgba(155, 34, 66, 0.03) 0%, rgba(101, 29, 50, 0.05) 100%);
+   box-shadow: 0 4px 16px rgba(155, 34, 66, 0.08);
+}
+.gob-vote-slot.filled::before {
+   content: "";
+   position: absolute;
+   left: 0;
+   top: 0;
+   bottom: 0;
+   width: 4px;
+   background: linear-gradient(180deg, var(--gob-guinda) 0%, var(--gob-guinda-dark) 100%);
+   border-radius: 0 2px 2px 0;
+}
+.gob-vote-slot-num {
+   font-size: 0.68rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   font-weight: 800;
+   color: var(--gob-gris-claro);
+   margin-bottom: 4px;
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+.gob-vote-slot.filled .gob-vote-slot-num {
+   color: var(--gob-guinda);
+}
+.gob-vote-slot-name {
+   font-size: 0.9rem;
+   font-weight: 700;
+   color: var(--gob-negro);
+   line-height: 1.3;
+}
+.gob-vote-slot-cat {
+   font-size: 0.72rem;
+   color: var(--gob-gris);
+   margin-top: 4px;
+}
+.gob-vote-slot-empty-label {
+   font-size: 0.82rem;
+   color: var(--gob-gris-claro);
+   display: flex;
+   align-items: center;
+   gap: 7px;
+}
+.gob-vote-remove-btn {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   width: 24px;
+   height: 24px;
+   background: rgba(155, 34, 66, 0.1);
+   border: none;
+   border-radius: 50%;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--gob-guinda);
+   font-size: 0.75rem;
+   transition: all 0.2s;
+}
+.gob-vote-remove-btn:hover {
+   background: var(--gob-guinda);
+   color: #fff;
+   transform: scale(1.1);
+}
+.gob-ballot-counter {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   margin-bottom: 20px;
+}
+.gob-counter-bar-wrap {
+   flex: 1;
+   height: 8px;
+   background: #eee;
+   border-radius: 10px;
+   overflow: hidden;
+}
+.gob-counter-bar-fill {
+   height: 100%;
+   background: linear-gradient(90deg, var(--gob-guinda) 0%, var(--gob-guinda-dark) 100%);
+   border-radius: 10px;
+   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gob-counter-label {
+   font-size: 0.78rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+   white-space: nowrap;
+}
+.gob-counter-label span {
+   color: var(--gob-gris);
+   font-weight: 400;
+}
+.gob-review-card {
+   background: #fff;
+   border-radius: 20px;
+   padding: 28px 32px;
+   border: 1px solid rgba(0, 0, 0, 0.05);
+   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+   animation: gob-fadeUp 0.4s ease both;
+   max-width: 680px;
+}
+.gob-review-header {
+   display: flex;
+   align-items: center;
+   gap: 14px;
+   padding-bottom: 18px;
+   border-bottom: 1px solid #f0f0f0;
+   margin-bottom: 20px;
+}
+.gob-review-icon {
+   width: 48px;
+   height: 48px;
+   background: linear-gradient(135deg, var(--gob-guinda), var(--gob-guinda-dark));
+   border-radius: 12px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 1.4rem;
+   flex-shrink: 0;
+   box-shadow: 0 4px 14px rgba(155, 34, 66, 0.3);
+}
+.gob-review-title {
+   font-family: "Playfair Display", serif;
+   font-size: 1.1rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+}
+.gob-review-sub {
+   font-size: 0.8rem;
+   color: var(--gob-gris);
+   margin-top: 2px;
+}
+.gob-review-info-row {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 14px;
+   margin-bottom: 20px;
+   background: rgba(155, 34, 66, 0.03);
+   border-radius: 12px;
+   padding: 14px 16px;
+   border: 1px solid rgba(155, 34, 66, 0.08);
+}
+.gob-review-info-item label {
+   font-size: 0.65rem;
+   text-transform: uppercase;
+   letter-spacing: 0.09em;
+   color: var(--gob-gris);
+   font-weight: 700;
+   display: block;
+   margin-bottom: 3px;
+}
+.gob-review-info-item .val {
+   font-size: 0.88rem;
+   font-weight: 700;
+   color: var(--gob-negro);
+}
+.gob-review-votes-list {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   margin-bottom: 22px;
+}
+.gob-review-vote-item {
+   display: flex;
+   align-items: center;
+   gap: 14px;
+   padding: 12px 16px;
+   border-radius: 12px;
+   border: 1px solid rgba(0, 0, 0, 0.06);
+   background: #fafaf8;
+}
+.gob-review-vote-rank {
+   width: 32px;
+   height: 32px;
+   background: linear-gradient(135deg, var(--gob-guinda), var(--gob-guinda-dark));
+   border-radius: 8px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: "Playfair Display", serif;
+   font-size: 0.9rem;
+   font-weight: 900;
+   color: #fff;
+   flex-shrink: 0;
+   box-shadow: 0 2px 8px rgba(155, 34, 66, 0.25);
+}
+.gob-review-vote-name {
+   font-size: 0.9rem;
+   font-weight: 700;
+   color: var(--gob-negro);
+   flex: 1;
+}
+.gob-review-vote-cat {
+   font-size: 0.72rem;
+   background: rgba(155, 34, 66, 0.08);
+   color: var(--gob-guinda-dark);
+   border-radius: 6px;
+   padding: 3px 8px;
+   font-weight: 600;
+}
+.gob-boleta-success {
+   text-align: center;
+   padding: 48px 32px;
+   background: #fff;
+   border-radius: 24px;
+   border: 1px solid rgba(0, 0, 0, 0.05);
+   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+   max-width: 520px;
+   margin: 0 auto;
+   animation: gob-fadeUp 0.5s ease both;
+   position: relative;
+   overflow: hidden;
+}
+.gob-success-emblem {
+   width: 80px;
+   height: 80px;
+   background: linear-gradient(135deg, var(--gob-guinda), var(--gob-guinda-dark));
+   border-radius: 20px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 2.2rem;
+   margin-bottom: 18px;
+   box-shadow: 0 8px 28px rgba(155, 34, 66, 0.3);
+   animation: gob-fadeUp 0.5s ease 0.1s both;
+}
+.gob-success-title {
+   font-family: "Playfair Display", serif;
+   font-size: 1.6rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+   margin-bottom: 8px;
+}
+.gob-success-sub {
+   font-size: 0.9rem;
+   color: var(--gob-gris);
+   line-height: 1.6;
+   margin-bottom: 24px;
+}
+.gob-success-folio {
+   background: rgba(155, 34, 66, 0.06);
+   border: 1px dashed var(--gob-guinda);
+   border-radius: 12px;
+   padding: 14px 20px;
+   font-family: monospace;
+   font-size: 1rem;
+   color: var(--gob-guinda-dark);
+   font-weight: 700;
+   letter-spacing: 0.08em;
+   display: inline-block;
+   margin-bottom: 24px;
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+.gob-login-screen {
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 20px;
+   background: linear-gradient(135deg, var(--gob-guinda-dark) 0%, var(--gob-negro) 100%);
+   position: relative;
+   overflow: hidden;
+}
+.gob-login-box {
+   background: rgba(255, 255, 255, 0.97);
+   border-radius: 24px;
+   padding: 48px 44px;
+   width: 100%;
+   max-width: 430px;
+   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+   animation: gob-fadeUp 0.5s ease both;
+   position: relative;
+   z-index: 1;
+}
+.gob-login-logo {
+   text-align: center;
+   margin-bottom: 28px;
+}
+.gob-login-emblem {
+   width: 64px;
+   height: 64px;
+   background: linear-gradient(135deg, var(--gob-guinda) 0%, var(--gob-guinda-dark) 100%);
+   border-radius: 16px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 2rem;
+   margin-bottom: 12px;
+   box-shadow: 0 8px 24px rgba(155, 34, 66, 0.35);
+}
+.gob-login-title {
+   font-family: "Playfair Display", serif;
+   font-size: 1.5rem;
+   font-weight: 700;
+   color: var(--gob-guinda-dark);
+}
+.gob-login-sub {
+   font-size: 0.8rem;
+   color: var(--gob-gris);
+   margin-top: 3px;
+}
+
+/* ============================================================
+   UTILIDADES GENERALES
+   ============================================================ */
+.gob-empty-state {
+   text-align: center;
+   padding: 48px 24px;
+   color: var(--gob-gris-claro);
+}
+.gob-empty-icon {
+   font-size: 48px;
+   margin-bottom: 12px;
+}
+.gob-empty-title {
+   font-size: 16px;
+   font-weight: 700;
+   color: var(--gob-gris);
+   margin-bottom: 6px;
+}
+.gob-empty-desc {
+   font-size: 13px;
+}
+.gob-grid-2 {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 20px;
+}
+.gob-grid-3 {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap: 20px;
+}
+.gob-mb-4 {
+   margin-bottom: 16px;
+}
+.gob-mb-6 {
+   margin-bottom: 24px;
+}
+.gob-mt-4 {
+   margin-top: 16px;
+}
+.gob-text-center {
+   text-align: center;
+}
+.gob-text-guinda {
+   color: var(--gob-guinda);
+}
+.gob-font-bold {
+   font-weight: 700;
+}
+.gob-font-mono {
+   font-family: monospace;
+   letter-spacing: 1px;
+}
+.gob-divider {
+   height: 1px;
+   background: rgba(184, 182, 175, 0.3);
+   margin: 20px 0;
+}
+
+/* ============================================================
+   ANIMACIONES COMPARTIDAS
+   ============================================================ */
+@keyframes gob-fadeUp {
+   from {
+      opacity: 0;
+      transform: translateY(18px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+@keyframes gob-fadeDown {
+   from {
+      opacity: 0;
+      transform: translateY(-8px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+@keyframes slideIn {
+   from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+   }
+}
+.gob-slide-in-right {
+   animation: slideInRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@keyframes slideInRight {
+   from {
+      opacity: 0;
+      transform: translateX(30px);
+   }
+   to {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+.gob-slide-in-left {
+   animation: slideInLeft 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@keyframes slideInLeft {
+   from {
+      opacity: 0;
+      transform: translateX(-30px);
+   }
+   to {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+.gob-shake {
+   animation: shake 0.4s ease both !important;
+}
+@keyframes shake {
+   0%,
+   100% {
+      transform: translateX(0);
+   }
+   20% {
+      transform: translateX(-8px);
+   }
+   40% {
+      transform: translateX(8px);
+   }
+   60% {
+      transform: translateX(-5px);
+   }
+   80% {
+      transform: translateX(5px);
+   }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+   .gob-sidebar {
+      transform: translateX(calc(-1 * var(--gob-sidebar-w)));
+   }
+   .gob-sidebar.open {
+      transform: translateX(0);
+      box-shadow: 4px 0 30px rgba(0, 0, 0, 0.15);
+   }
+   .gob-layout {
+      margin-left: 0 !important;
+   }
+   .gob-page-container {
+      padding: 20px 18px;
+   }
+   .gob-doc-selector {
+      grid-template-columns: 1fr 1fr;
+   }
+   .gob-stats-grid {
+      grid-template-columns: 1fr 1fr;
+   }
+   .gob-chart-grid {
+      grid-template-columns: 1fr;
+   }
+   .gob-boleta-config-grid {
+      grid-template-columns: 1fr;
+   }
+   .gob-votes-grid {
+      grid-template-columns: 1fr;
+   }
+   .gob-review-info-row {
+      grid-template-columns: 1fr;
+   }
+   .gob-grid-2,
+   .gob-grid-3 {
+      grid-template-columns: 1fr;
+   }
+}
