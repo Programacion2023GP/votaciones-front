@@ -1,4 +1,4 @@
-import CustomButton from "../../components/customButtom";
+import CustomButton from "../../components/CustomButtom";
 import CustomTable, { renderColActive } from "../../components/CustomTable";
 import Tooltip from "../../components/Tooltip";
 import { icons } from "../../constant";

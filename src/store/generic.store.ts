@@ -322,6 +322,7 @@ export function createGenericStore<T extends { id?: number }, E = {}, P extends 
 
                   if (data.error && typeof data.error == "object") {
                      Object.values(data.error).forEach((errors: any) => {
+                        console.log("🚀 ~ createGenericStore ~ errors:", errors)
                         errors.map((error: string) => Toast.Warning(error));
                      });
                   } else {

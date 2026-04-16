@@ -47,7 +47,7 @@ const CasillaForm = ({}) => {
                // addRegister={authContext.persist?.auth?.permissions?.create ? () => casillaContext.setOpen() : null}
             />
          ),
-         validations: Yup.number().min(0, "Esta opción no es valida").notRequired(),
+         validations: Yup.string().trim().required("El tipo es requerido."),
          validationPage: [],
          dividerBefore: { show: false, title: "EMPLEADO", orientation: "horizontal", className: "" }
       },
@@ -135,11 +135,11 @@ const CasillaForm = ({}) => {
       return Yup.object().shape(validationsPerPage);
    };
    const onSubmit = async (values: Casilla | Casilla[], {}: any) => {
-      console.log("🚀 ~ onSubmit ~ validationSchema:", validationSchema());
+      // console.log("🚀 ~ onSubmit ~ validationSchema:", validationSchema());
       // values.evidences = imgEvidences.length == 0 ? "" : imgEvidences[0].file;
-      console.log("🚀 ~ onSubmit ~ values:", values);
+      // console.log("🚀 ~ onSubmit ~ values:", values);
       const res = await casillaContext.postItem(values);
-      console.log("🚀 ~ onSubmit ~ res:", res);
+      // console.log("🚀 ~ onSubmit ~ res:", res);
    };
    const handleCancel = () => {
       // formikRef.current.resetForm();

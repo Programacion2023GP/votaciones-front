@@ -106,7 +106,8 @@ const ParticipationsForm: React.FC = () => {
 
    const onSubmit = async (values: any) => {
       // El user_id se añadirá en beforePost del hook
-      await participationsContext.postItem(values);
+      const res = await participationsContext.postItem(values);
+      console.log("🚀 ~ onSubmit ~ res:", res)
       // Limpiar formulario después de enviar (opcional)
       // if (formikRef.current) {
       //    formikRef.current.resetForm();

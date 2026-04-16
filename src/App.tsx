@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import Login from "./pages/Login";
 // import Registro from "./pages/participationsPage/Registro";
 import Participaciones from "./pages/Participaciones";
@@ -27,11 +27,6 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
-   const [votos, setVotos] = useState([]);
-   const handleAddVoto = (voto) => {
-      setVotos((prev) => [...prev, { id: Date.now(), ...voto, fecha: new Date().toISOString() }]);
-   };
-
    return (
       <>
          <SnackbarProvider
@@ -68,7 +63,7 @@ function App() {
             }}
          >
             <Suspense /* fallback={<GlobalLoading /> */>
-               <BrowserRouter>
+               <HashRouter>
                   <Routes>
                      <Route path="/login" element={<Login />} />
                      <Route
@@ -81,14 +76,14 @@ function App() {
                      >
                         <Route index element={<Navigate to="/registro" replace />} />
                         <Route path="registro" element={<Participations />} />
-                        <Route path="boleta" element={<Boleta votos={votos} onAddVoto={handleAddVoto} />} />
+                        <Route path="boleta" element={<Boleta />} />
                         <Route path="usuarios" element={<Usuarios />} />
                         <Route path="casillas" element={<Casillas />} />
                         <Route path="estadisticas" element={<Participaciones />} />
                         <Route path="perfil" element={<Perfil />} />
                      </Route>
                   </Routes>
-               </BrowserRouter>
+               </HashRouter>
             </Suspense>
          </SnackbarProvider>
       </>

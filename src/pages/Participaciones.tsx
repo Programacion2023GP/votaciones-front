@@ -1,10 +1,13 @@
 import React, { useState, useMemo } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
-import useStore from "../store/useStore";
-import { fmtFecha } from "../utils/helpers";
+// import useStore from "../store/useStore";
+import { fmtFecha, formatDatetime } from "../utils/helpers";
+import useAuthData from "../hooks/useAuthData";
+import useParticipationsData from "../hooks/useParticipationsData";
 
 const Participaciones: React.FC = () => {
-   const { participaciones } = useStore();
+   const userAuth = useAuthData().persist.auth;
+   const participationContext = useParticipationsData();
 
    // State for filters
    const [search, setSearch] = useState("");
@@ -12,24 +15,24 @@ const Participaciones: React.FC = () => {
    const [filtroCasilla, setFiltroCasilla] = useState<string>("todas");
 
    // Derived data
-   const casillas = useMemo(() => [...new Set(participaciones.map((p) => p.casilla))], [participaciones]);
+   const casillas = useMemo(() => [...new Set(participationContext.items.map((p) => p.user_id))], [participationContext.items]);
 
    const filtered = useMemo(() => {
-      return participaciones.filter((p) => {
+      return participationContext.items.filter((p) => {
          const s = search.toLowerCase();
-         const matchS = p.curp.toLowerCase().includes(s) || p.casilla.toLowerCase().includes(s);
-         const matchT = filtroTipo === "todos" || p.tipo === filtroTipo;
-         const matchC = filtroCasilla === "todas" || p.casilla === filtroCasilla;
+         const matchS = p.curp.toLowerCase().includes(s) || String(p.user_id).toLowerCase().includes(s);
+         const matchT = filtroTipo === "todos" || p.type === filtroTipo;
+         const matchC = filtroCasilla === "todas" || String(p.user_id) === filtroCasilla;
          return matchS && matchT && matchC;
       });
-   }, [participaciones, search, filtroTipo, filtroCasilla]);
+   }, [participationContext.items, search, filtroTipo, filtroCasilla]);
 
    // Stats
-   const totalINE = participaciones.filter((p) => p.tipo === "INE").length;
-   const totalDOC = participaciones.filter((p) => p.tipo === "Carta Identidad").length;
+   const totalINE = participationContext.items.filter((p) => p.type === "INE").length;
+   const totalDOC = participationContext.items.filter((p) => p.type === "Carta Identidad").length;
    const byCasilla = casillas.map((c) => ({
       casilla: c,
-      count: participaciones.filter((p) => p.casilla === c).length
+      count: participationContext.items.filter((p) => p.user_id === c).length
    }));
 
    // Data for pie chart (doughnut style)
@@ -58,7 +61,7 @@ const Participaciones: React.FC = () => {
             <div className="stat-card">
                <div className="stat-accent" />
                <div className="stat-icon">🗳️</div>
-               <div className="stat-value">{participaciones.length}</div>
+               <div className="stat-value">{participationContext.items.length}</div>
                <div className="stat-label">Total Participaciones</div>
                <div className="stat-change">↑ Actualizado ahora</div>
             </div>
@@ -68,7 +71,7 @@ const Participaciones: React.FC = () => {
                <div className="stat-value">{totalINE}</div>
                <div className="stat-label">Via INE</div>
                <div className="stat-change" style={{ color: "#2980B9" }}>
-                  {participaciones.length ? Math.round((totalINE / participaciones.length) * 100) : 0}% del total
+                  {participationContext.items.length ? Math.round((totalINE / participationContext.items.length) * 100) : 0}% del total
                </div>
             </div>
             <div className="stat-card">
@@ -77,7 +80,7 @@ const Participaciones: React.FC = () => {
                <div className="stat-value">{totalDOC}</div>
                <div className="stat-label">Via Carta Identidad</div>
                <div className="stat-change" style={{ color: "#27AE60" }}>
-                  {participaciones.length ? Math.round((totalDOC / participaciones.length) * 100) : 0}% del total
+                  {participationContext.items.length ? Math.round((totalDOC / participationContext.items.length) * 100) : 0}% del total
                </div>
             </div>
             <div className="stat-card">
@@ -133,7 +136,7 @@ const Participaciones: React.FC = () => {
                                  border: "1px solid #eee"
                               }}
                            />
-                           <Bar dataKey="participaciones" fill="#9B2242" radius={[6, 6, 0, 0]} barSize={40} />
+                           <Bar dataKey="participationContext.items" fill="#9B2242" radius={[6, 6, 0, 0]} barSize={40} />
                         </BarChart>
                      </ResponsiveContainer>
                   </div>
@@ -183,7 +186,7 @@ const Participaciones: React.FC = () => {
                               <div className="empty-state">
                                  <div className="empty-icon">📊</div>
                                  <div className="empty-title">Sin registros</div>
-                                 <div className="empty-desc">No hay participaciones que coincidan</div>
+                                 <div className="empty-desc">No hay participationContext.items que coincidan</div>
                               </div>
                            </td>
                         </tr>
@@ -192,8 +195,8 @@ const Participaciones: React.FC = () => {
                         <tr key={p.id}>
                            <td style={{ color: "var(--gris-claro)", fontSize: 12 }}>{String(i + 1).padStart(3, "0")}</td>
                            <td>
-                              <span className={`badge ${p.tipo === "INE" ? "badge-ine" : "badge-doc"}`}>
-                                 {p.tipo === "INE" ? "🪪" : "📄"} {p.tipo}
+                              <span className={`badge ${p.type === "INE" ? "badge-ine" : "badge-doc"}`}>
+                                 {p.type === "INE" ? "🪪" : "📄"} {p.type}
                               </span>
                            </td>
                            <td>
@@ -202,9 +205,9 @@ const Participaciones: React.FC = () => {
                               </span>
                            </td>
                            <td>
-                              <span className="casilla-tag">🏛️ {p.casilla}</span>
+                              <span className="casilla-tag">🏛️ {p.user_id}</span>
                            </td>
-                           <td style={{ color: "var(--gris)", fontSize: 12 }}>{fmtFecha(p.fecha)}</td>
+                           <td style={{ color: "var(--gris)", fontSize: 12 }}>{formatDatetime(p.created_at, false)}</td>
                         </tr>
                      ))}
                   </tbody>

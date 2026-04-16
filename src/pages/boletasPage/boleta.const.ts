@@ -1,5 +1,4 @@
-// ─── Colores por categoría / distrito ────────────────────────────────────
-// La clave coincide con el valor de Project.assigned_district
+// ─── Colores por distrito (para UI) ──────────────────────────────────────
 export const CAT_COLORS: Record<string | number, string> = {
    "Espacio Publico": "#2d6a4f",
    Movilidad: "#1a6891",
@@ -23,11 +22,10 @@ export const CAT_COLORS: Record<string | number, string> = {
    5: "#5a3825"
 };
 
-/** Color de fallback cuando el distrito/categoría no tiene mapeo. */
 export const FALLBACK_COLOR = "#555";
 
-/** Número máximo de votos permitidos por boleta. */
-export const MAX_VOTOS = 10;
+/** Número máximo de votos permitidos por boleta (coincide con campos vote_1..vote_5) */
+export const MAX_VOTOS = 5;
 
-/** Longitud mínima aceptada para el campo voterId. */
-export const MIN_VOTER_ID_LEN = 5;
+/** Longitud mínima para el nombre de la casilla (no se usa, pero se deja por compatibilidad) */
+export const MIN_VOTER_ID_LEN = 1;

@@ -1,4 +1,5 @@
-<div className="card">
+{
+   /* <div className="card">
    <div className="card-header">
       <div className="search-wrap">
          <div className="search-input-wrap">
@@ -64,15 +65,16 @@
                   </td>
                   <td className="p-3">
                      <div className="flex gap-2">
-                        {/* <button className="btn-sm btn-sm-ghost" onClick={() => toggleUsuario(c.id)}>
-                                    {c.activa ? "Desactivar" : "Activar"}
-                                 </button>
-                                 <button className="btn-sm btn-sm-ghost" onClick={() => handleEdit(c)}>
-                                    Editar
-                                 </button>
-                                 <button className="btn-sm btn-sm-danger" onClick={() => handleDelete(c.id, c.username)}>
-                                    Eliminar
-                                 </button> */}
+                        <button className="btn-sm btn-sm-ghost" onClick={() => toggleUsuario(c.id)}>
+                           {c.activa ? "Desactivar" : "Activar"}
+                        </button>
+                        <button className="btn-sm btn-sm-ghost" onClick={() => handleEdit(c)}>
+                           Editar
+                        </button>
+                        <button className="btn-sm btn-sm-danger" onClick={() => handleDelete(c.id, c.username)}>
+                           Eliminar
+                        </button>{" "}
+                        *
                      </div>
                   </td>
                </tr>
@@ -92,4 +94,5 @@
       ]}
       headerActions={() => <></>}
    />
-</div>;
+</div>; */
+}

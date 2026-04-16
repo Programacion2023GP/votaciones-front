@@ -68,9 +68,9 @@ const Participations: React.FC = () => {
             </div>
          </div>
 
-         <div className="mt-8">
+         {/* <div className="mt-8">
             <ParticipationsTable />
-         </div>
+         </div> */}
       </div>
    );
 };

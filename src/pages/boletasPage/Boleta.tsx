@@ -562,7 +562,7 @@ const Boleta = ({ user, votos, onAddVoto }) => {
                   <div className="success-title">&#161;Voto registrado!</div>
                   <p className="success-sub">
                      Tu boleta fue emitida correctamente en la <b>Casilla {voterCasilla}</b>.<br />
-                     Gracias por participar en el proceso de presupuesto participativo.
+                     Gracias por participar en el proceso de Tu Voz Transforma.
                   </p>
                   <div className="success-folio">{folio}</div>
                   <div style={{ fontSize: ".75rem", color: "var(--gris-claro)", marginBottom: 22 }}>Guarda este folio como comprobante de tu participacion</div>

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { env } from "../constant";
-import type { Auth } from "../domains/models/auth.model";
 import Toast from "./Toast";
 // import useAuthData from "../hooks/useAuthData";
 

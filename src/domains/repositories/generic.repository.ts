@@ -1,6 +1,6 @@
 import type { Options } from "../../components/forms/Select2";
 
-export type Result<T> = { ok: true; data: T; message: string } | { ok: false; error: any; message: string };
+export type Result<T> = { ok: true; data: T; error?: any; message: string } | { ok: false; error: any; message: string };
 
 export interface RequestOptions<T> {
    data?: Partial<T>;

@@ -1,7 +1,7 @@
 import Toast from "./Toast";
 import dayjs from "dayjs";
 import "dayjs/locale/es"; // importa el locale español
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
 
 dayjs.locale("es"); // establece el locale global a español
 // import dayjs from "dayjs";
@@ -16,7 +16,7 @@ export const fmtFecha = (iso: string | number | Date) => {
    return d.toLocaleString("es-MX", { dateStyle: "short", timeStyle: "short" });
 };
 
-export const validateImageRequired = (valuesImg: any, msg = "Imagen requerida") => {
+export const validateImageRequired = (valuesImg: any, _msg = "Imagen requerida") => {
    if (
       valuesImg == null ||
       valuesImg == "null" ||
@@ -83,7 +83,11 @@ export function validateCURP(str_curp: string) {
  * @param input_final_date - Objeto con método val() que retorna la fecha.
  * @returns true si el rango es válido, false en caso contrario.
  */
-function validateRangeDates(action: string, input_initial_date: { val: () => string }, input_final_date: { val: () => string }): boolean {
+export function validateRangeDates(action: string, input_initial_date: {
+   [x: string]: any; val: () => string 
+}, input_final_date: {
+   [x: string]: any; val: () => string 
+}): boolean {
    let current_date = new Date();
    let yesterday = new Date(current_date.setDate(current_date.getDate() - 1));
    yesterday = new Date(yesterday.setHours(23, 59, 59));
@@ -115,7 +119,7 @@ function validateRangeDates(action: string, input_initial_date: { val: () => str
    return true;
 }
 
-function binaryDateTimeFormat(the_date: string): string {
+export function binaryDateTimeFormat(the_date: string): string {
    let date = new Date(parseInt(the_date.substr(6)));
    let datetime = dayjs(date).format("MM-DD-YYYY h:mm:ss a");
    return datetime;
@@ -199,15 +203,15 @@ export function formatCurrency(amount: number, MX: boolean = true, show_currency
  * Aplica formato de moneda a una lista de elementos jQuery.
  * @param tds - Array de elementos TD de jQuery.
  */
-export function formatearCantidadDeRenglones(tds: JQuery<HTMLElement>): void {
-   // Nota: Esta función usa jQuery. Si no se usa jQuery, se puede eliminar o adaptar.
-   tds.each(function (this: HTMLElement) {
-      let td = $(this);
-      let cantidad = td.text();
-      let cantidad_formateada = formatCurrency(parseFloat(cantidad));
-      td.html(`${cantidad_formateada}`);
-   });
-}
+// export function formatearCantidadDeRenglones(tds: JQuery<HTMLElement>): void {
+//    // Nota: Esta función usa jQuery. Si no se usa jQuery, se puede eliminar o adaptar.
+//    tds.each(function (this: HTMLElement) {
+//       let td = $(this);
+//       let cantidad = td.text();
+//       let cantidad_formateada = formatCurrency(parseFloat(cantidad));
+//       td.html(`${cantidad_formateada}`);
+//    });
+// }
 
 /**
  * Formatea un número de teléfono a 10 dígitos con espacios.
@@ -660,7 +664,7 @@ export const printContent = (titlePrint: string, idContent: string): void => {
             }
          </style>
       </head><body>`);
-   printWindow.document.writeln(content);
+   printWindow.document.writeln(content as string);
    printWindow.document.writeln(`</body>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/material-ui/4.12.4/index.min.js" integrity="sha512-kIdy/WIexvksScC2I+uDkS0mx9tkTDDcYHjeY5Rmeum5GQuq8wgZqUv6FUMtGv0bm5KPY0vlps5nKBj+8BGutQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       </html>`);
