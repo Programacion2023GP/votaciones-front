@@ -11,7 +11,7 @@ export type AvatarSize = "w-8" | "w-10" | "w-12" | "w-14" | "w-16" | "w-20" | "w
 export type AvatarIndicator = "online" | "offline" | "placeholder" | "none";
 
 /** Available ring colors (Tailwind ring color classes) */
-export type AvatarRingColor = "ring-primary" | "ring-secondary" | "ring-accent" | "ring-guinda" | "ring-guinda-dark";
+export type AvatarRingColor = "ring-primary" | "ring-secondary" | "ring-accent" | "ring-guinda" | "ring-guinda-dark" | "bg-guinda-claro";
 
 /** Available ring offset colors */
 export type AvatarRingOffset = "ring-offset-base-100" | "ring-offset-base-200" | "ring-offset-base-300" | "ring-offset-white";
@@ -20,7 +20,18 @@ export type AvatarRingOffset = "ring-offset-base-100" | "ring-offset-base-200" |
 export type AvatarRounded = "rounded-none" | "rounded-sm" | "rounded-md" | "rounded-lg" | "rounded-xl" | "rounded-full";
 
 /** Available background colors (Tailwind background classes) */
-export type AvatarBgColor = "bg-neutral" | "bg-primary" | "bg-secondary" | "bg-accent" | "bg-guinda" | "bg-guinda-dark" | "bg-gris-cool" | "bg-gris" | "bg-negro";
+export type AvatarBgColor =
+   | "bg-neutral"
+   | "bg-primary"
+   | "bg-secondary"
+   | "bg-accent"
+   | "bg-guinda"
+   | "bg-guinda-dark"
+   | "bg-guinda-claro"
+   | "bg-guinda-claro2"
+   | "bg-gris-cool"
+   | "bg-gris"
+   | "bg-negro";
 
 /** Available text colors (Tailwind text classes) */
 export type AvatarTextColor = "text-neutral-content" | "text-white" | "text-black" | "text-gris" | "text-guinda";
@@ -63,10 +74,10 @@ const Avatar: React.FC<AvatarProps> = ({
    indicator = "none",
    size = "w-12",
    ring = false,
-   ringColor = "ring-primary",
+   ringColor = "ring-guinda-claro",
    ringOffset = "ring-offset-base-100",
    rounded = "rounded-full",
-   bgColor = "bg-neutral",
+   bgColor = "bg-guinda-claro2",
    textColor = "text-neutral-content"
 }) => {
    // Determine the outer avatar class with indicator
@@ -91,7 +102,7 @@ const Avatar: React.FC<AvatarProps> = ({
       return (
          <div className={outerClass}>
             <div className={`${innerClass} flex items-center justify-center`}>
-               <span className="text-base font-medium">{children}</span>
+               <span className="text-base font-black">{children}</span>
             </div>
          </div>
       );

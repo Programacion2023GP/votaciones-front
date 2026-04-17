@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import useStore from "../store/useStore";
 import icons from "./../constant/icons";
 import Avatar from "./Avatar";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,6 @@ const Topbar = () => {
    const authContext = useAuthData();
    // const auth = useAuthStore((state) => state.auth);
    // const setAuth = useAuthStore((state) => state.setAuth);
-   // const { user, logout } = useStore();
    const [open, setOpen] = useState(false);
    const navigate = useNavigate();
    const ref = useRef(null);

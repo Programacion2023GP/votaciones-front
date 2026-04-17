@@ -5,9 +5,10 @@ import type { Auth } from "../domains/models/auth.model";
 import type { Options } from "../components/forms/Select2";
 import { genericConfig } from "../utils/generic.config";
 import type { ApiResult } from "../domains/models/apiResult.model";
-import { QuestionAlertConfig } from "../utils/sAlert";
+import sAlert, { QuestionAlertConfig } from "../utils/sAlert";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import useParticipationsData from "../hooks/useParticipationsData";
 
 // ─── Hooks de ciclo de vida ────────────────────────────────────────────────
 export interface StoreLifecycleHooks<T> {
@@ -322,8 +323,20 @@ export function createGenericStore<T extends { id?: number }, E = {}, P extends 
 
                   if (data.error && typeof data.error == "object") {
                      Object.values(data.error).forEach((errors: any) => {
-                        console.log("🚀 ~ createGenericStore ~ errors:", errors)
-                        errors.map((error: string) => Toast.Warning(error));
+                        console.log("🚀 ~ createGenericStore ~ errors:", errors);
+                        errors.map((error: string) => {
+                           if (error === "Esta CURP ya ha sido registrada previamente.") {
+                              return error;
+                              // const participation = participationContext.items;
+                              // console.log("🚀 ~ createGenericStore ~ participation:", participation);
+                              return sAlert.Customizable(
+                                 "Participación Duplicada",
+                                 `La CURP "{curp.toUpperCase().trim()}" ya fue registrado en la {existe.casilla} el {existe.fecha}. Su participación ya está contabilizada.`,
+                                 "warning",
+                                 true
+                              );
+                           } else return Toast.Warning(error);
+                        });
                      });
                   } else {
                      Toast.Customizable(data.message, "error");
@@ -435,7 +448,31 @@ export function createGenericStore<T extends { id?: number }, E = {}, P extends 
                } else {
                   log("request", "error", { message: result.message }, duration);
 
-                  Toast.Customizable(result.message || "Error en la operación", "error");
+                  // Toast.Customizable(result.message || "Error en la operación", "error");
+
+                  if (result.error && typeof result.error == "object") {
+                     return result;
+
+                     Object.values(result.error).forEach((errors: any) => {
+                        console.log("🚀 ~ createGenericStore ~ errors:", errors);
+                        errors.map((error: string) => {
+                           if (error === "Esta CURP ya ha sido registrada previamente.") {
+                              return error;
+                              // const participation = participationContext.items;
+                              // console.log("🚀 ~ createGenericStore ~ participation:", participation);
+                              return sAlert.Customizable(
+                                 "Participación Duplicada",
+                                 `La CURP "{curp.toUpperCase().trim()}" ya fue registrado en la {existe.casilla} el {existe.fecha}. Su participación ya está contabilizada.`,
+                                 "warning",
+                                 true
+                              );
+                           } else return Toast.Warning(error);
+                        });
+                     });
+                  } else {
+                     Toast.Customizable(result.message, "error");
+                  }
+
                   set({ error: result.message } as any);
                   callback?.error?.();
                }

@@ -85,9 +85,10 @@ const Question = async (msg: string, confirmText: string = "Si, eliminar!", canc
    });
 };
 
-const Customizable = (msg: string, icon: SweetAlertIcon, showConfirmButton: boolean = false, timer: number = 1500): void => {
+const Customizable = (title: string, msg: string, icon: SweetAlertIcon, showConfirmButton: boolean = false, timer: number = 1500): void => {
    MySwal.fire({
       icon,
+      title,
       html: buildHtml(msg),
       confirmButtonColor: colorPrimaryDark,
       showConfirmButton,

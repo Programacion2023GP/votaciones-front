@@ -21,16 +21,11 @@ const Participations: React.FC = () => {
                <h1 className="page-title">{participationsContext.pluralName}</h1>
                <p className="page-subtitle">Registre la participación ciudadana en su casilla electoral</p>
             </div>
-            <div className="casilla-tag">
-               🏛️{" "}
-               {userAuth?.casilla_id
-                  ? `${userAuth?.username} - ${userAuth?.casilla_place} → ${userAuth.casilla_location || ""} (${userAuth?.casilla_type})`
-                  : "Sin casilla asignada"}
-            </div>
+            <div className="casilla-tag">🏛️ {userAuth?.casilla_id ? userAuth.full_name : "Sin casilla asignada"}</div>
          </div>
 
          <div className="flex items-center justify-center mx-auto mb-6">
-            <img src={images.logo} alt="TuVozTransforma" className="object-cover w-5/12 md:w-3/12" />
+            <img src={images.logo} alt="TuVozTransforma" className="object-cover w-5/12 md:w-3/15" />
          </div>
 
          <div className="grid-2">

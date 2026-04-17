@@ -35,7 +35,7 @@ interface InputProps {
    maxLength?: number;
    minLength?: number;
    onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-   inputRef?: React.RefObject<HTMLInputElement>;
+   inputRef?: React.Ref<HTMLInputElement> | React.RefObject<HTMLInputElement>;
    rows?: number;
 }
 

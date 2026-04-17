@@ -30,8 +30,8 @@ const StepExito: React.FC<StepExitoProps> = ({ folio, voterCasilla, onReset }) =
          </p>
 
          {/* Folio comprobante */}
-         <div className="success-folio">{folio}</div>
-         <div style={{ fontSize: ".75rem", color: "var(--gris-claro)", marginBottom: 22 }}>Guarda este folio como comprobante de tu participación</div>
+         {/* <div className="success-folio">{folio}</div>
+         <div style={{ fontSize: ".75rem", color: "var(--gris-claro)", marginBottom: 22 }}>Guarda este folio como comprobante de tu participación</div> */}
 
          {/* Acciones */}
          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>

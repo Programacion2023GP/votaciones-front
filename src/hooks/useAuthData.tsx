@@ -50,6 +50,7 @@ const useAuthData = (): AuthDataReturn => {
          casilla_place: null,
          casilla_location: null,
          casilla_active: null,
+         full_name: "",
          token: "",
          // Permisos derivados (opcional, para facilitar uso en frontend)
          permissions: {

@@ -29,10 +29,8 @@ const CasillaTable = ({}) => {
                   renderField: (value, _row) => {
                      return (
                         <div className="w-full text-center">
-                           <span
-                              className={`badge ${value?.toString().toLocaleLowerCase() === "rural" ? "badge-rural" : value === "urbana" ? "badge-urbana" : "badge-especial"}`}
-                           >
-                              {value === "rural" ? "🌾 Rural" : value === "urbana" ? "🏙️ Urbana" : "✨ Especial"}
+                           <span className={`badge ${value === "Rural" ? "badge-rural" : value === "Urbana" ? "badge-urbana" : "badge-especial"}`}>
+                              {value === "Rural" ? "🌾 Rural" : value === "Urbana" ? "🏙️ Urbana" : "✨ Especial"}
                            </span>
                         </div>
                      );

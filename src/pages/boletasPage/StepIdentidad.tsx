@@ -6,7 +6,7 @@ const StepIdentidad: React.FC<StepIdentidadProps> = ({ voterCasilla, voterNVotos
    <div className="voter-id-card slide-in-right">
       <div className="voter-badge">
          <icons.Lu.LuIdCard size={14} />
-         &nbsp;Verificación de Identidad
+         &nbsp;Verificación de casilla
       </div>
 
       <div
@@ -23,26 +23,34 @@ const StepIdentidad: React.FC<StepIdentidadProps> = ({ voterCasilla, voterNVotos
 
       <p style={{ fontSize: ".85rem", color: "var(--gris)", marginBottom: 22, lineHeight: 1.6 }}>Tu participación es anónima. Solo una participación por ciudadano.</p>
 
-      <div className="grid gap-4.5 grid-cols-2" style={{ marginBottom: 20 }}>
+      <div className="grid gap-4.5 grid-cols-4" style={{ marginBottom: 20 }}>
          {/* Casilla */}
-         <div className="config-field">
+         <div className="config-field col-span-3">
             <label>Casilla de Votación</label>
-            <select className="config-select" value={voterCasilla} onChange={(e) => onChange("voterCasilla", e.target.value)}>
-               {userAuth?.casilla_place && <option value={userAuth.casilla_place}>{userAuth.casilla_place}</option>}
-               {casillas
-                  .filter((c) => !userAuth?.casilla_place || c.place !== userAuth.casilla_place)
-                  .map((c) => (
-                     <option key={c.id} value={c.place}>
-                        {c.place}
-                     </option>
-                  ))}
-            </select>
+            {userAuth?.role_id === 1 ? (
+               <select className="config-select" value={voterCasilla} onChange={(e) => onChange("voterCasilla", e.target.value)}>
+                  {/* {userAuth?.casilla_place && <option value={userAuth.casilla_place}>{userAuth.casilla_place}</option>} */}
+                  {casillas
+                     .filter((c) => !userAuth?.casilla_place || c.place !== userAuth.casilla_place)
+                     .map((c) => (
+                        <option key={c.id} value={c.place}>
+                           ({c.type}) {c.place} {c.location ? `→ ${c.location}` : ""}
+                        </option>
+                     ))}
+               </select>
+            ) : (
+               <p className="config-input">{voterCasilla}</p>
+            )}
          </div>
 
          {/* Número de votos */}
          <div className="config-field">
             <label>Número de Votos (N)</label>
-            <input className="config-input" type="number" min={1} max={5} value={voterNVotos} disabled onChange={(e) => onChange("voterNVotos", e.target.value)} />
+            {userAuth?.role_id === 1 ? (
+               <input className="config-input" type="number" min={1} max={5} value={voterNVotos} disabled onChange={(e) => onChange("voterNVotos", e.target.value)} />
+            ) : (
+               <p className="config-input">{voterNVotos}</p>
+            )}
          </div>
       </div>
 

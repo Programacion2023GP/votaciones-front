@@ -42,7 +42,16 @@ export type GenericDataReturn<T extends { id?: number }, E = {}, P extends Recor
    refresh: () => Promise<T[]>;
    postItem: (item: T | T[], formData?: boolean, fetchAfter?: boolean) => Promise<void>;
    removeItemData: (item: T) => Promise<void>;
-   request: (options: any, callback?: any) => Promise<T | T[] | undefined>;
+   request: (
+      options: {
+         data?: Partial<T>;
+         url: string;
+         method: "POST" | "PUT" | "GET" | "DELETE";
+         formData?: boolean;
+         getData?: boolean;
+      },
+      callback?: any
+   ) => Promise<T | T[] | undefined>;
    persist: P;
    setFieldValue: <K extends keyof T>(key: K, value: T[K]) => void;
    setExtraValue: <K extends keyof S>(key: K, value: S[K]) => void;

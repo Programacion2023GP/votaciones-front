@@ -12,6 +12,9 @@
 @theme {
    --color-guinda-primary: #9b2242;
    --color-guinda-secondary: #651d32;
+   --color-guinda-claro: #c36a7f;
+   --color-guinda-claro2: #b3314b;
+   --color-guinda-off: rgba(155, 34, 66, 0.08);
    --color-gris-cool: #474c55;
    --color-gris: #727372;
    --color-gris-claro: #b8b6af;
@@ -28,7 +31,6 @@
    default: true;
    --color-primary: #9b2242;
    --color-primary-content: #ffffff;
-   --color-primary-off: rgba(155, 34, 66, 0.08);
    --color-secondary: #651d32;
    --color-secondary-content: #ffffff;
    --color-accent: #474c55;
@@ -1341,8 +1343,8 @@ tr:last-child td {
    color: #474c55;
 }
 .badge-especial {
-   background: rgba(184, 182, 175, 0.1);
-   color: #b8b6af;
+   background: rgba(206, 165, 17, 0.1);
+   color: #a0800f;
 }
 
 /* LOADING SPINNER */
@@ -2245,7 +2247,7 @@ body::before {
 /* ─── Participaciones / Estadísticas ─── */
 .stats-grid {
    display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
+   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
    gap: 16px;
    margin-bottom: 28px;
 }
@@ -2675,7 +2677,7 @@ tbody td {
    padding: 32px 36px;
    border: 1px solid rgba(0, 0, 0, 0.05);
    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-   max-width: 560px;
+   max-width: 750px;
    animation: fadeUp 0.4s ease both;
 }
 .voter-badge {
@@ -2793,7 +2795,7 @@ tbody td {
 /* Selected votes grid */
 .votes-grid {
    display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
    gap: 14px;
    margin-bottom: 24px;
 }
@@ -2959,7 +2961,8 @@ tbody td {
 }
 .review-info-row {
    display: grid;
-   grid-template-columns: 1fr 1fr;
+   /* grid-template-columns: minmax(150px, 1fr); */
+   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
    gap: 14px;
    margin-bottom: 20px;
    background: rgba(155, 34, 66, 0.03);
@@ -2983,9 +2986,10 @@ tbody td {
 }
 .review-votes-list {
    display: flex;
-   /* flex-direction: column; */
+   flex-direction: column;
    gap: 10px;
    margin-bottom: 22px;
+   width: auto;
 }
 .review-vote-item {
    display: flex;

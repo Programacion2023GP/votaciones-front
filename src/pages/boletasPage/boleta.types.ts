@@ -10,7 +10,7 @@ export enum BoletaStep {
 }
 
 export const STEP_LABELS: Record<BoletaStep, string> = {
-   [BoletaStep.Identidad]: "Identificación",
+   [BoletaStep.Identidad]: "Casilla",
    [BoletaStep.Seleccion]: "Selección",
    [BoletaStep.Revision]: "Revisión",
    [BoletaStep.Exito]: "Confirmación"

@@ -60,6 +60,7 @@ const useUsersData = (): UsersDataReturn => {
          casilla_place: "",
          casilla_location: "",
          casilla_active: true,
+         full_name: "",
 
          confirmPassword: "",
          changePassword: false

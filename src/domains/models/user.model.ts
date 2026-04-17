@@ -21,6 +21,7 @@ export interface User {
    casilla_place?: string;
    casilla_location?: string;
    casilla_active?: boolean;
+   full_name?: string;
 
    // VARIABLES DE LOGICA (Solo frontend)
    confirmPassword: string;

@@ -22,7 +22,7 @@ const axiosInstance = axios.create({
       "Content-Type": "application/json"
       // Authorization: `Bearer ${localStorage.getItem("auth-persist")! || ""}`
    },
-   validateStatus: (status) => (status >= 200 && status < 300) || status === 422 // 2xx y 4xx no lanzan error
+   validateStatus: (status) => (status >= 200 && status < 300) || status == 422 // 2xx y 4xx no lanzan error
 });
 
 // Interceptor: agregar token dinámico

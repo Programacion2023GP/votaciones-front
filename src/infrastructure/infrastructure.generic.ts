@@ -117,11 +117,12 @@ export class GenericApi<T extends object> implements GenericRepository<T> {
          const rawData = this.cfg.responseMap.data(response);
          const resData = this.cfg.middlewares.afterResponse?.(rawData) ?? rawData;
          const message = this.cfg.responseMap.message(response);
+         const errors = this.cfg.responseMap.errors(response) || this.cfg.messages.unknownError;
 
          if (ok) {
             return { ok: true, data: resData as R, message };
          } else {
-            return { ok: false, error: new Error(message), message };
+            return { ok: false, error: errors, message };
          }
       } catch (error: any) {
          const message = this.mapError(error);

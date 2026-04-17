@@ -20,6 +20,7 @@ export interface Auth {
    casilla_place: string | null;
    casilla_location: string | null;
    casilla_active: boolean | null;
+   full_name: string;
    token?: string;
    // Permisos derivados (opcional, para facilitar uso en frontend)
    permissions?: {

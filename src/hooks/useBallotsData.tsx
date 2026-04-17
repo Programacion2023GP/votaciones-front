@@ -29,11 +29,11 @@ const useBallotsData = () => {
       () => ({
          id: 0,
          user_id: userId,
-         vote_1: 0,
-         vote_2: 0,
-         vote_3: 0,
-         vote_4: 0,
-         vote_5: 0,
+         vote_1: null,
+         vote_2: null,
+         vote_3: null,
+         vote_4: null,
+         vote_5: null,
 
          active: true,
          created_at: "" //dayjs().format("YYYY-MM-DD").toString()

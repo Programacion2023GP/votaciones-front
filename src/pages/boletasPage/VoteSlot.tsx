@@ -17,7 +17,7 @@ export const VoteSlot: React.FC<VoteSlotProps> = ({ index, project, shake, onRem
             <>
                <div className="vote-slot-num">
                   <icons.Lu.LuCheck size={11} color="var(--guinda)" />
-                  &nbsp;Voto {index + 1}
+                  &nbsp;Proyecto {index + 1}
                </div>
                <div className="vote-slot-name">
                   <span

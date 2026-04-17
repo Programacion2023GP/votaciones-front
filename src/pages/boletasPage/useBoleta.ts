@@ -51,11 +51,14 @@ function reducer(state: BoletaState, action: Action): BoletaState {
 
 // ─── Hook principal ──────────────────────────────────────────────────────
 export function useBoleta() {
+   const userAuth = useAuthData().persist.auth;
+   INITIAL_STATE.voterCasilla = userAuth?.full_name ?? "";
+   INITIAL_STATE.districtFilter = userAuth?.casilla_district ?? null;
+
    const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
    const dropRef = useRef<HTMLDivElement>(null);
    const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-   const userAuth = useAuthData().persist.auth;
    const ballotsContext = useBallotsData();
 
    // ── Navegación ──────────────────────────────────────────────────────────
@@ -114,6 +117,7 @@ export function useBoleta() {
          });
          return;
       }
+      goStep(BoletaStep.Revision);
    }, [state, goStep]);
 
    // ── Agregar un proyecto a la selección ──────────────────────────────────

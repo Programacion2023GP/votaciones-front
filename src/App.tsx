@@ -2,7 +2,7 @@ import { Suspense, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import Login from "./pages/Login";
 // import Registro from "./pages/participationsPage/Registro";
-import Participaciones from "./pages/Participaciones";
+import Participaciones from "./pages/estadisticasPage/Participaciones";
 import Layout from "./components/Layout";
 import { isMobile } from "react-device-detect";
 
@@ -17,6 +17,7 @@ import Usuarios from "./pages/usersPage/index.users";
 import Casillas from "./pages/casillasPage/index.casillas";
 import Boleta from "./pages/boletasPage/index.boleta";
 import Participations from "./pages/participationsPage/index.participations";
+import Estadisticas from "./pages/estadisticasPage/index.estadisticas";
 
 dayjs.locale("es");
 
@@ -79,7 +80,7 @@ function App() {
                         <Route path="boleta" element={<Boleta />} />
                         <Route path="usuarios" element={<Usuarios />} />
                         <Route path="casillas" element={<Casillas />} />
-                        <Route path="estadisticas" element={<Participaciones />} />
+                        <Route path="estadisticas" element={<Estadisticas />} />
                         <Route path="perfil" element={<Perfil />} />
                      </Route>
                   </Routes>

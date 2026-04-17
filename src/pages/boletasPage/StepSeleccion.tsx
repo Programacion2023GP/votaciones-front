@@ -29,8 +29,9 @@ const StepSeleccion: React.FC<StepSeleccionProps> = ({
    // Proyectos filtrados para el dropdown
    const filteredProjs: Project[] = projects.filter((p) => {
       const matchSearch = p.project_name.toLowerCase().includes(search.toLowerCase()) || String(p.folio).includes(search.toLowerCase());
-      // const matchDistrict = districtFilter === null || p.assigned_district === districtFilter;
-      return matchSearch;
+      let matchDistrict = districtFilter === null;
+      if ((userAuth?.role_id === 3 && userAuth?.casilla_type !== "Especial") || districtFilter !== null) matchDistrict = p.assigned_district === districtFilter;
+      return matchSearch && matchDistrict;
    });
 
    return (
@@ -52,7 +53,7 @@ const StepSeleccion: React.FC<StepSeleccionProps> = ({
                </div>
                <div className="voter-badge" style={{ margin: 0 }}>
                   <icons.Lu.LuPin size={12} />
-                  &nbsp;{userAuth?.username ?? "—"} · {voterCasilla} · {userAuth?.casilla_location}
+                  &nbsp;{userAuth?.full_name ?? "—"}
                </div>
             </div>
 
@@ -109,7 +110,7 @@ const StepSeleccion: React.FC<StepSeleccionProps> = ({
                      onDistrictChange(val === "" ? null : Number(val));
                   }}
                >
-                  <option value="">Todos los distritos</option>
+                  {userAuth?.role_id === 3 && userAuth?.casilla_type === "Especial" && <option value="">Todos los distritos</option>}
                   {(districts.filter((d) => d !== null) as number[]).map((d) => (
                      <option key={d} value={d}>
                         Distrito {d}
@@ -158,7 +159,7 @@ const StepSeleccion: React.FC<StepSeleccionProps> = ({
                <icons.Lu.LuArrowBigLeft size={16} />
                Atrás
             </button>
-            <button className="btn-primary" style={{ flex: 1 }} onClick={onContinue} disabled={seleccion.length === 0} type="button">
+            <button className="btn-primary" style={{ flex: 1 }} onClick={onContinue} /* disabled={seleccion.length === 0} */ type="button">
                <icons.Lu.LuArrowBigRight size={17} color="#fff" />
                Revisar selección
             </button>

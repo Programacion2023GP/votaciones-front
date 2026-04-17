@@ -43,7 +43,7 @@ const Boleta: React.FC = () => {
             <p>Selecciona los proyectos de tu preferencia de forma anónima y segura. Ejercicio de Tu Voz Transforma ciudadano.</p>
             <div className="voter-badge" style={{ margin: 0 }}>
                <icons.Lu.LuPin size={12} />
-               &nbsp;{userAuth?.username ?? "—"} · {userAuth?.casilla_place} · {userAuth?.casilla_location}
+               &nbsp;{userAuth?.full_name ?? "—"}
             </div>
             <div className="page-divider" />
          </div>
