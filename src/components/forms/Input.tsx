@@ -32,6 +32,8 @@ interface InputProps {
    required?: boolean;
    changePassword?: boolean;
    setChangePassword?: (value: boolean) => void;
+   min?: number;
+   max?: number;
    maxLength?: number;
    minLength?: number;
    onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -74,6 +76,8 @@ const Input: React.FC<InputProps> = ({
    required = false,
    changePassword = false,
    setChangePassword,
+   min,
+   max,
    maxLength,
    minLength,
    onKeyUp,
@@ -194,6 +198,8 @@ const Input: React.FC<InputProps> = ({
                   onKeyUp={onKeyUp}
                   disabled={disabled}
                   required={required}
+                  min={min}
+                  max={max}
                   maxLength={characterLimit > 0 ? characterLimit : maxLength}
                   minLength={minLength}
                   aria-rowspan={type === "text" && rows > 1 ? rows : undefined}

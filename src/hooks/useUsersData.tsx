@@ -73,7 +73,7 @@ const useUsersData = (): UsersDataReturn => {
       prefix: "users",
       autoFetch: true,
       persistKey: "users-persist",
-      debug: true,
+      debug: false,
       extraState: {
          textBtnSubmit: "REGISTRAR",
          singularName: singularName,

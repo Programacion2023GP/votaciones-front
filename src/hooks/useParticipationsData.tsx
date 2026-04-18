@@ -43,7 +43,7 @@ const useParticipationsData = () => {
       prefix: "participations",
       autoFetch: true,
       persistKey: "participations-persist",
-      debug: true,
+      debug: false,
       extraState: {
          textBtnSubmit: "✓ Registrar Participación".toUpperCase(),
          singularName: singularName,

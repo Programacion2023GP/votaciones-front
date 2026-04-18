@@ -46,7 +46,7 @@ const useBallotsData = () => {
       prefix: "ballots",
       autoFetch: true,
       persistKey: "ballots-persist",
-      debug: true,
+      debug: false,
       extraState: {
          textBtnSubmit: "✓ Registrar Votos".toUpperCase(),
          singularName: singularName,

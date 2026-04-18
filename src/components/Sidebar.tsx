@@ -9,6 +9,7 @@ const allNavItems = [
    { to: "/boleta", label: "Boleta", icon: icons.Gi.GiPaperTray, section: "Principal", roles: [1, 2, 3] },
    { to: "/usuarios", label: "Usuarios", icon: icons.Lu.LuUsers, section: "Catálogos", roles: [1, 2] },
    { to: "/casillas", label: "Casillas", icon: icons.Lu.LuMapPin, section: "Catálogos", roles: [1, 2] },
+   { to: "/proyectos", label: "Proyectos", icon: icons.Lu.LuFolderOpen, section: "Catálogos", roles: [1, 2] },
    { to: "/estadisticas", label: "Participaciones y Estadísticas", icon: icons.Lu.LuChartBar, section: "Catálogos", roles: [1, 2] }
 ];
 

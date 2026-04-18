@@ -42,7 +42,7 @@ const useProjectsData = () => {
       prefix: "projects",
       autoFetch: true,
       persistKey: "projects-persist",
-      debug: true,
+      debug: false,
       extraState: {
          textBtnSubmit: "REGISTRAR",
          singularName: singularName,
