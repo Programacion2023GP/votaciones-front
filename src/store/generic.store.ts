@@ -449,24 +449,10 @@ export function createGenericStore<T extends { id?: number }, E = {}, P extends 
                   log("request", "error", { message: result.message }, duration);
 
                   // Toast.Customizable(result.message || "Error en la operación", "error");
-
                   if (result.error && typeof result.error == "object") {
-                     return result;
-
                      Object.values(result.error).forEach((errors: any) => {
-                        console.log("🚀 ~ createGenericStore ~ errors:", errors);
                         errors.map((error: string) => {
-                           if (error === "Esta CURP ya ha sido registrada previamente.") {
-                              return error;
-                              // const participation = participationContext.items;
-                              // console.log("🚀 ~ createGenericStore ~ participation:", participation);
-                              return sAlert.Customizable(
-                                 "Participación Duplicada",
-                                 `La CURP "{curp.toUpperCase().trim()}" ya fue registrado en la {existe.casilla} el {existe.fecha}. Su participación ya está contabilizada.`,
-                                 "warning",
-                                 true
-                              );
-                           } else return Toast.Warning(error);
+                           Toast.Warning(error);
                         });
                      });
                   } else {
@@ -475,6 +461,7 @@ export function createGenericStore<T extends { id?: number }, E = {}, P extends 
 
                   set({ error: result.message } as any);
                   callback?.error?.();
+                  return result;
                }
             } catch (error: any) {
                const duration = performance.now() - start;

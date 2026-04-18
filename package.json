@@ -1,7 +1,7 @@
 {
    "name": "votaciones-front",
    "private": true,
-   "version": "1.0.0.2b",
+   "version": "1.0.0.3b",
    "type": "module",
    "engines": {
       "node": ">=22"

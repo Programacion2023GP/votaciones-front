@@ -21,7 +21,7 @@ const StepExito: React.FC<StepExitoProps> = ({ folio, voterCasilla, onReset }) =
          <div className="success-emblem">🎉</div>
 
          {/* Título */}
-         <div className="success-title">¡Voto registrado!</div>
+         <div className="success-title">Boleta registrada!</div>
 
          {/* Descripción */}
          <p className="success-sub">

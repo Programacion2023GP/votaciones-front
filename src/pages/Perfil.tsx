@@ -25,7 +25,9 @@ const Perfil: React.FC = () => {
             <div className="profile-info">
                <div className="profile-name">{userAuth?.username}</div>
                <div className="profile-cargo">{userAuth?.role_name}</div>
-               <div className="profile-casilla">🏛️ {userAuth?.casilla_location}</div>
+               <div className="profile-casilla">
+                  🏛️ {userAuth?.casilla_place} • {userAuth?.casilla_location}
+               </div>
             </div>
          </div>
 
@@ -62,7 +64,7 @@ const Perfil: React.FC = () => {
                      ["Lugar", userAuth?.casilla_place],
                      ["Ubicación", userAuth?.casilla_location],
                      ["Periodo", "Proceso Electoral 2026"],
-                     ["Tipo de casilla", "Básica"]
+                     ["Tipo de casilla", userAuth.casilla_type === "Especial" ? "Espacial" : "Básica"]
                   ].map(([label, val]) => (
                      <div key={label} className="info-row">
                         <span className="info-row-label">{label}</span>

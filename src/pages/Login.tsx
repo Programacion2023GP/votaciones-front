@@ -94,7 +94,7 @@ const Login: React.FC = () => {
                <p className="text-sm text-gris mt-1">Votaciones · Gómez Palacio 2026</p>
             </div>
             <form onSubmit={formik.handleSubmit} className="card">
-               <div className="card-header">
+               <div className="card-header bg-guinda-primary!">
                   <p className="card-header-title" style={{ color: "#fff", fontSize: 13, fontWeight: 700, textAlign: "center" }}>
                      🔐 Acceso Funcionarios Electorales
                   </p>

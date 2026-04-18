@@ -49,7 +49,15 @@ const UserTable = ({}) => {
                // },
                {
                   headerName: "Casilla Vinculada",
-                  field: "casilla_place"
+                  field: "full_name",
+                  renderField: (value, _row) => {
+                     const full_name = value
+                        ? String(value as string)
+                             .split(" - ")
+                             .reverse()[0]
+                        : "-";
+                     return <>{full_name}</>;
+                  }
                },
                {
                   headerName: "Activo",

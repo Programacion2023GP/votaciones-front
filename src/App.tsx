@@ -2,7 +2,7 @@ import { Suspense, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import Login from "./pages/Login";
 // import Registro from "./pages/participationsPage/Registro";
-import Participaciones from "./pages/estadisticasPage/Participaciones";
+import Participaciones from "./pages/Participaciones";
 import Layout from "./components/Layout";
 import { isMobile } from "react-device-detect";
 

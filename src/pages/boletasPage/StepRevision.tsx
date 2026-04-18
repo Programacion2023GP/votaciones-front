@@ -84,7 +84,7 @@ const StepRevision: React.FC<StepRevisionProps> = ({ voterCasilla, voterNVotos, 
             ) : (
                <>
                   <icons.Lu.LuSend size={16} color="#fff" />
-                  Emitir mi voto
+                  Emitir boleta
                </>
             )}
          </button>

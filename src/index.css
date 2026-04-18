@@ -460,6 +460,7 @@ body::after {
 
 /* CARDS */
 .card {
+   margin: 10px;
    background: #fff;
    border-radius: 16px;
    border: 1px solid rgba(184, 182, 175, 0.3);
@@ -473,24 +474,18 @@ body::after {
    align-items: center;
    justify-content: center;
 
-   background: var(--guinda);
+   background: rgb(250, 248, 248); /* var(--blanco); */
    /* padding: 16px 24px; */
    border-radius: 16px 16px 0 0;
-
-   & > p {
-      color: #fff;
-      font-size: 13;
-      font-weight: 700;
-      text-align: "center";
-   }
-}
-.card-body {
-   padding: 24px;
 }
 .card-title-text {
-   color: var(--superficie);
+   color: var(--negro);
    font-size: 15px;
    font-weight: 700;
+}
+
+.card-body {
+   padding: 24px;
 }
 
 /* REGISTRO PAGE */

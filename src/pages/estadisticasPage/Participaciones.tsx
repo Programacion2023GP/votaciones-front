@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 // import useStore from "../store/useStore";
-import { fmtFecha, formatDatetime } from "../../utils/helpers";
-import useAuthData from "../../hooks/useAuthData";
-import useParticipationsData from "../../hooks/useParticipationsData";
-import useBallotsData from "../../hooks/useBallotsData";
-import useProjectsData from "../../hooks/useProjectsData";
+import { fmtFecha, formatDatetime } from "../utils/helpers";
+import useAuthData from "../hooks/useAuthData";
+import useParticipationsData from "../hooks/useParticipationsData";
+import useBallotsData from "../hooks/useBallotsData";
+import useProjectsData from "./../hooks/useProjectsData";
 
 const Participaciones: React.FC = () => {
    const userAuth = useAuthData().persist.auth;
