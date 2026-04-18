@@ -88,8 +88,8 @@ const Estadisticas: React.FC = () => {
             <StatCard label="Participaciones" value={totals.participations} icon={<icons.Lu.LuUsers />} />
             <StatCard label="Boletas emitidas" value={totals.ballots} icon={<icons.Lu.LuVote />} />
             <StatCard label="Casillas activas" value={totals.active_casillas} icon={<icons.Lu.LuMapPin />} />
-            <StatCard label="INE" value={participations_by_type[0].total} icon={"🪪"} />
-            <StatCard label="Carta Identidad" value={participations_by_type[1].total} icon={"📄"} />
+            {/* <StatCard label="INE" value={participations_by_type[0].total ?? 0} icon={"🪪"} />
+            <StatCard label="Carta Identidad" value={participations_by_type[1].total ?? 0} icon={"📄"} /> */}
          </div>
 
          {/* Gráficas principales */}
