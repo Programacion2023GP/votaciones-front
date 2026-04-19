@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import StatCard from "../../components/dashboard/statCard";
 import ChartWrapper from "../../components/dashboard/ChartWrapper";
-import TopProjectsList from "../../components/dashboard/TopProjectsList";
+import TopProjectsList, { ProjectVote } from "../../components/dashboard/TopProjectsList";
 import { icons } from "../../constant";
 import { formatDatetime } from "../../utils/helpers";
 import useParticipationsData from "../../hooks/useParticipationsData";
@@ -19,8 +19,8 @@ const Estadisticas: React.FC = () => {
       participationsContext
          .request({ method: "GET", url: `statistics/dashboard`, getData: false })
          .then((res: any) => {
-            console.log("🚀 ~ Estadisticas ~ res[0]:", res[0]);
-            setStats(res[0]);
+            // console.log("🚀 ~ Estadisticas ~ res[0]:", res[0].data);
+            setStats(res[0].data);
          })
          .catch((err) => console.error(err))
          .finally(() => setLoading(false));
@@ -50,7 +50,17 @@ const Estadisticas: React.FC = () => {
          </div>
       );
 
-   const { totals, participations_by_type, ballots_by_casilla, ballots_by_district, top_projects, participations_by_hour, votes_by_district } = stats;
+   const {
+      totals,
+      participations_by_type,
+      ballots_by_casilla,
+      ballots_by_district,
+      top_projects,
+      participations_by_hour,
+      votes_by_district,
+      null_votes_by_district,
+      top_projects_by_district
+   } = stats;
 
    return (
       <div className="page">
@@ -76,22 +86,20 @@ const Estadisticas: React.FC = () => {
             </button>
             {/* </div> */}
          </div>
-
          <div className="page-header">
             <h1 className="page-title">Tablero de Análisis</h1>
             <p className="page-subtitle">Estadísticas generales del proceso electoral</p>
          </div>
-
          {/* Stats generales */}
          <div className="stats-grid">
             <StatCard label="Proyectos" value={totals.projects} icon={<icons.Lu.LuFileText />} />
             <StatCard label="Participaciones" value={totals.participations} icon={<icons.Lu.LuUsers />} />
             <StatCard label="Boletas emitidas" value={totals.ballots} icon={<icons.Lu.LuVote />} />
             <StatCard label="Casillas activas" value={totals.active_casillas} icon={<icons.Lu.LuMapPin />} />
+            <StatCard label="Votos nulos" value={stats.totals.null_votes} icon={<icons.Lu.LuCircleX />} />
             {/* <StatCard label="INE" value={participations_by_type[0].total ?? 0} icon={"🪪"} />
             <StatCard label="Carta Identidad" value={participations_by_type[1].total ?? 0} icon={"📄"} /> */}
          </div>
-
          {/* Gráficas principales */}
          <div className="chart-grid mb-6">
             <ChartWrapper
@@ -100,11 +108,23 @@ const Estadisticas: React.FC = () => {
                dataKey="value"
                nameKey="name"
                colors={["#9B2242", "#474C55"]}
-               title="Participaciones por tipo de documento"
+               title="🪪 Participaciones por tipo de documento"
+               showTotal
+               totalLabel="Total"
             />
-            <ChartWrapper type="bar" data={ballots_by_district} dataKey="total" nameKey="casilla_district" title="Boletas por distrito" layout="horizontal" />
+            <ChartWrapper
+               type="bar"
+               data={ballots_by_district}
+               dataKey="total"
+               nameKey="casilla_district"
+               title="🎫 Boletas por distrito"
+               layout="horizontal"
+               xLabel="Distritos"
+               yLabel="Bolletas"
+               showTotal
+               totalLabel="Total"
+            />
          </div>
-
          {/* Evolución temporal */}
          <ChartWrapper
             type="line"
@@ -115,27 +135,68 @@ const Estadisticas: React.FC = () => {
             }))}
             dataKey="value"
             nameKey="name"
-            title="Participaciones en las últimas 24 horas (por hora)"
+            title="🕛 Participaciones en las últimas 24 horas (por hora)"
             height={300}
             tooltipFormatter={(value, name, props) => {
                // Personalizar tooltip para mostrar fecha completa
                return [`${value} participaciones`, props.payload.fullDate];
             }}
+            xLabel="Horas"
+            yLabel="Participaciones"
+            showTotal
+            totalLabel="Total"
          />
-
          {/* Top 10 proyectos y votos por distrito */}
          <div className="chart-grid mb-6">
-            <TopProjectsList projects={top_projects} />
             <ChartWrapper
                type="bar"
                data={votes_by_district}
                dataKey="votos"
                nameKey="assigned_district"
-               title="Votos acumulados por distrito"
+               title="🗳️ Votos acumulados por distrito"
                layout="horizontal"
+               xLabel="Distritos"
+               yLabel="Votos"
+               showTotal
+               totalLabel="Total"
+               height={300}
+            />
+            <ChartWrapper
+               type="bar"
+               data={null_votes_by_district}
+               dataKey="nulos"
+               nameKey="district"
+               title="🚫 Nulos por distrito"
+               layout="horizontal"
+               xLabel="Distrito"
+               yLabel="Nulos"
+               showTotal
+               totalLabel="Total"
                height={300}
             />
          </div>
+         <ChartWrapper
+            type="bar"
+            data={ballots_by_casilla}
+            dataKey="total"
+            nameKey="casilla_place"
+            title="🗳️ Boletas por casilla"
+            layout="horizontal"
+            xLabel="Casillas"
+            yLabel="Bolletas"
+            showTotal
+            totalLabel="Total"
+            height={300}
+         />
+         <TopProjectsList projects={top_projects} title="Proyectos más votados (general)" />
+         {/* // Mostrar top 10 por distrito (puedes iterar sobre las claves) */}
+         {/* <div className="chart-grid mb-6"> */}
+         {Object.entries(top_projects_by_district).map(([district, projects]) => (
+            <div key={district}>
+               <TopProjectsList key={district} projects={projects as ProjectVote[]} title={`Distrito ${district} – Proyectos más votados`} />
+            </div>
+         ))}
+         {/* </div> */}
       </div>
    );
 };

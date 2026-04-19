@@ -18,6 +18,9 @@ import Boleta from "./pages/boletasPage/index.boleta";
 import Participations from "./pages/participationsPage/index.participations";
 import Estadisticas from "./pages/estadisticasPage/index.estadisticas";
 import Projects from "./pages/projectsPage/index.projects";
+import PageCasillasPublicas from "./pages/publics/PageCasillasPublicas";
+import PageProyectosPublicos from "./pages/publics/PageProyectosPublicos";
+import PageResultados from "./pages/publics/PageResultados";
 
 dayjs.locale("es");
 
@@ -67,6 +70,9 @@ function App() {
                <HashRouter>
                   <Routes>
                      <Route path="/login" element={<Login />} />
+                     <Route path="/listado-casillas" element={<PageCasillasPublicas />} />
+                     <Route path="/listado-proyectos" element={<PageProyectosPublicos />} />
+                     <Route path="/listado-resultados" element={<PageResultados />} />
                      <Route
                         path="/"
                         element={

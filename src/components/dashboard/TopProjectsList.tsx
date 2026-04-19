@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ProjectVote {
+export interface ProjectVote {
    id: number;
    project_name: string;
    assigned_district: number;

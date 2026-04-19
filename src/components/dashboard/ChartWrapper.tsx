@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from "recharts";
 
 type ChartType = "bar" | "line" | "pie" | "horizontalBar";
@@ -13,6 +13,14 @@ interface ChartWrapperProps {
    layout?: "horizontal" | "vertical";
    height?: number;
    tooltipFormatter?: (value: any, name: any, props: any) => any;
+   /** Etiqueta para el eje X (solo para gráficos de barras y líneas) */
+   xLabel?: string;
+   /** Etiqueta para el eje Y (solo para gráficos de barras y líneas) */
+   yLabel?: string;
+   /** Muestra el total de los valores en dataKey */
+   showTotal?: boolean;
+   /** Texto que acompaña al total (ej. "Total de votos") */
+   totalLabel?: string;
 }
 
 const ChartWrapper: React.FC<ChartWrapperProps> = ({
@@ -24,16 +32,36 @@ const ChartWrapper: React.FC<ChartWrapperProps> = ({
    title,
    layout = "horizontal",
    height = 250,
-   tooltipFormatter
+   tooltipFormatter,
+   xLabel,
+   yLabel,
+   showTotal = false,
+   totalLabel = "Total"
 }) => {
+   // Calcular total si se solicita
+   const total = useMemo(() => {
+      if (!showTotal) return null;
+      return data.reduce((acc, item) => acc + (Number(item[dataKey]) || 0), 0);
+   }, [data, dataKey, showTotal]);
+
    const renderChart = () => {
       switch (type) {
          case "bar":
+         case "horizontalBar":
+            const isHorizontal = type === "horizontalBar" || layout === "vertical";
             return (
-               <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 5 }} layout={layout}>
+               <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 5 }} layout={isHorizontal ? "vertical" : "horizontal"}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey={layout === "horizontal" ? nameKey : undefined} type={layout === "vertical" ? "number" : "category"} />
-                  <YAxis dataKey={layout === "vertical" ? nameKey : undefined} type={layout === "vertical" ? "category" : "number"} />
+                  <XAxis
+                     dataKey={isHorizontal ? undefined : nameKey}
+                     type={isHorizontal ? "number" : "category"}
+                     label={xLabel && !isHorizontal ? { value: xLabel, position: "insideBottom", offset: -5 } : undefined}
+                  />
+                  <YAxis
+                     dataKey={isHorizontal ? nameKey : undefined}
+                     type={isHorizontal ? "category" : "number"}
+                     label={yLabel && !isHorizontal ? { value: yLabel, angle: -90, position: "insideLeft" } : undefined}
+                  />
                   <Tooltip formatter={tooltipFormatter} />
                   <Legend />
                   <Bar dataKey={dataKey} fill={colors[0]} radius={[6, 6, 0, 0]} barSize={40} />
@@ -43,8 +71,8 @@ const ChartWrapper: React.FC<ChartWrapperProps> = ({
             return (
                <LineChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey={nameKey} />
-                  <YAxis />
+                  <XAxis dataKey={nameKey} label={xLabel ? { value: xLabel, position: "insideBottom", offset: -5 } : undefined} />
+                  <YAxis label={yLabel ? { value: yLabel, angle: -90, position: "insideLeft" } : undefined} />
                   <Tooltip formatter={tooltipFormatter} />
                   <Legend />
                   <Line type="monotone" dataKey={dataKey} stroke={colors[0]} strokeWidth={2} />
@@ -69,9 +97,14 @@ const ChartWrapper: React.FC<ChartWrapperProps> = ({
 
    return (
       <div className="card">
-         {title && (
+         {(title || (showTotal && total !== null)) && (
             <div className="card-header">
-               <span className="card-title-text">{title}</span>
+               {title && <span className="card-title-text">{title}</span>}
+               {showTotal && total !== null && (
+                  <span className="badge badge-primary ml-2" style={{ marginLeft: 2 }}>
+                     {totalLabel}: {total.toLocaleString()}
+                  </span>
+               )}
             </div>
          )}
          <div className="card-body">
