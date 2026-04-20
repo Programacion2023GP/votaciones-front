@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import useStore, { type User } from "../store/useStore";
-import { env, images } from "../constant";
+import { env, icons, images } from "../constant";
 import useAuthData from "../hooks/useAuthData";
 
 interface LoginFormValues {
@@ -33,6 +33,7 @@ const Login: React.FC = () => {
    const authContext = useAuthData();
    // const login = useStore((state) => state.login);
    const [loading, setLoading] = useState(false);
+   const [showPassword, setShowPassword] = useState(false);
 
    const formik = useFormik<LoginFormValues>({
       initialValues: authContext.initialValues,
@@ -120,12 +121,20 @@ const Login: React.FC = () => {
                      </label>
                      <input
                         id="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
                         disabled={authContext.loading}
                         className={`form-input transition ${formik.touched.password && formik.errors.password ? "border-red-500" : "border-gris-claro"}`}
                         {...formik.getFieldProps("password")}
                      />
+                     <button
+                        type="button"
+                        className="absolute inset-y-0 right-10 flex -bottom-27.5 items-center pr-3 text-gray-500 hover:text-gray-700"
+                        onClick={() => setShowPassword(!showPassword)}
+                        tabIndex={-1}
+                     >
+                        {showPassword ? <icons.Lu.LuEyeOff size={20} /> : <icons.Lu.LuEye size={20} />}
+                     </button>
                      {formik.touched.password && formik.errors.password && <div className="form-error text-xs mt-1">⚠ {formik.errors.password}</div>}
                   </div>
                   <button type="submit" disabled={authContext.loading} className="btn-primary">

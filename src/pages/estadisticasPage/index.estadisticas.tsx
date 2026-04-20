@@ -53,6 +53,7 @@ const Estadisticas: React.FC = () => {
    const {
       totals,
       participations_by_type,
+      participations_by_casilla,
       ballots_by_casilla,
       ballots_by_district,
       top_projects,
@@ -125,6 +126,21 @@ const Estadisticas: React.FC = () => {
                totalLabel="Total"
             />
          </div>
+         <ChartWrapper
+            type="bar"
+            data={participations_by_casilla.map((item: any) => ({
+               name: `${item.casilla_place} (${item.casilla_type})`,
+               value: item.total
+            }))}
+            dataKey="value"
+            nameKey="name"
+            title="Participaciones por casilla"
+            xLabel="Casilla"
+            yLabel="Número de participaciones"
+            showTotal
+            totalLabel="Total participaciones"
+         />
+
          {/* Evolución temporal */}
          <ChartWrapper
             type="line"
@@ -188,7 +204,7 @@ const Estadisticas: React.FC = () => {
             totalLabel="Total"
             height={300}
          />
-         <TopProjectsList projects={top_projects} title="Proyectos más votados (general)" />
+         <TopProjectsList projects={top_projects} title="Proyectos con votos (general)" />
          {/* // Mostrar top 10 por distrito (puedes iterar sobre las claves) */}
          {/* <div className="chart-grid mb-6"> */}
          {Object.entries(top_projects_by_district).map(([district, projects]) => (

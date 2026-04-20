@@ -10,7 +10,10 @@ const allNavItems = [
    { to: "/usuarios", label: "Usuarios", icon: icons.Lu.LuUsers, section: "Catálogos", roles: [1, 2] },
    { to: "/casillas", label: "Casillas", icon: icons.Lu.LuMapPin, section: "Catálogos", roles: [1, 2] },
    { to: "/proyectos", label: "Proyectos", icon: icons.Lu.LuFolderOpen, section: "Catálogos", roles: [1, 2] },
-   { to: "/estadisticas", label: "Participaciones y Estadísticas", icon: icons.Lu.LuChartBar, section: "Catálogos", roles: [1, 2] }
+   { to: "/estadisticas", label: "Participaciones y Estadísticas", icon: icons.Lu.LuChartBar, section: "Resultados", roles: [1, 2, 4] },
+   { to: "/listado-casillas", label: "Listadoo de casillas Pública", icon: icons.Lu.LuList, section: "Resultados", roles: [1, 2, 4] },
+   { to: "/listado-proyectos", label: "Listadoo de proyectos Pública", icon: icons.Lu.LuList, section: "Resultados", roles: [1, 2, 4] },
+   { to: "/listado-resultados", label: "Listadoo de resultados Pública", icon: icons.Lu.LuList, section: "Resultados", roles: [1, 2] }
 ];
 
 const Sidebar = () => {

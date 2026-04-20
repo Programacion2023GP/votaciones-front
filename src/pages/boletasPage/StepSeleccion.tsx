@@ -27,12 +27,14 @@ const StepSeleccion: React.FC<StepSeleccionProps> = ({
    const pct = voterNVotos > 0 ? (seleccion.length / voterNVotos) * 100 : 0;
 
    // Proyectos filtrados para el dropdown
-   const filteredProjs: Project[] = projects.filter((p) => {
-      const matchSearch = p.project_name.toLowerCase().includes(search.toLowerCase()) || String(p.folio).includes(search.toLowerCase());
-      let matchDistrict = districtFilter === null;
-      if ((userAuth?.role_id === 3 && userAuth?.casilla_type !== "Especial") || districtFilter !== null) matchDistrict = p.assigned_district === districtFilter;
-      return matchSearch && matchDistrict;
-   });
+   const filteredProjs: Project[] = projects
+      .filter((p) => {
+         const matchSearch = p.project_name.toLowerCase().includes(search.toLowerCase()) || String(p.folio).includes(search.toLowerCase());
+         let matchDistrict = districtFilter === null;
+         if ((userAuth?.role_id === 3 && userAuth?.casilla_type !== "Especial") || districtFilter !== null) matchDistrict = p.assigned_district === districtFilter;
+         return matchSearch && matchDistrict;
+      })
+      .sort((a, b) => a.folio - b.folio);
 
    return (
       <div className="slide-in-right">
