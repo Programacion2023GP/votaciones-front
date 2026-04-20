@@ -21,6 +21,7 @@ import Projects from "./pages/projectsPage/index.projects";
 import PageCasillasPublicas from "./pages/publics/PageCasillasPublicas";
 import PageProyectosPublicos from "./pages/publics/PageProyectosPublicos";
 import PageResultados from "./pages/publics/PageResultados";
+import Registros from "./pages/participationsPage/index.registers";
 
 dayjs.locale("es");
 
@@ -82,11 +83,12 @@ function App() {
                         }
                      >
                         <Route index element={<Navigate to="/registro" replace />} />
-                        <Route path="registro" element={<Participations />} />
+                        <Route path="registro" element={<Registros />} />
                         <Route path="boleta" element={<Boleta />} />
                         <Route path="usuarios" element={<Usuarios />} />
                         <Route path="casillas" element={<Casillas />} />
-                        <Route path="/proyectos" element={<Projects />} />
+                        <Route path="proyectos" element={<Projects />} />
+                        <Route path="participaciones" element={<Participations />} />
                         <Route path="estadisticas" element={<Estadisticas />} />
                         <Route path="perfil" element={<Perfil />} />
                      </Route>

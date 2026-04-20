@@ -1,5 +1,5 @@
 // pages/Participations/ParticipationsTable.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import CustomButton from "../../components/CustomButtom";
 import CustomTable, { renderColActive } from "../../components/CustomTable";
 import Tooltip from "../../components/Tooltip";
@@ -7,10 +7,13 @@ import { icons } from "../../constant";
 import useAuthData from "../../hooks/useAuthData";
 import useParticipationsData from "../../hooks/useParticipationsData";
 import { formatDatetime } from "../../utils/helpers";
+import useUsersData from "../../hooks/useUsersData";
+import { User } from "../../domains/models/user.model";
 
 const ParticipationsTable: React.FC = () => {
    const authContext = useAuthData();
    const participationsContext = useParticipationsData();
+   const usersContext = useUsersData();
 
    const handleClickEdit = (row: any) => {
       participationsContext.handleChangeItem(row);
@@ -20,6 +23,12 @@ const ParticipationsTable: React.FC = () => {
    const handleClickDelete = (row: any) => {
       participationsContext.removeItemData(row);
    };
+
+   useEffect(() => {
+      (async () => {
+         usersContext.fetchData();
+      })();
+   }, []);
 
    return (
       <CustomTable
@@ -44,15 +53,13 @@ const ParticipationsTable: React.FC = () => {
             {
                headerName: "Usuario / Casilla",
                field: "user_id",
-               renderField: (_, row) => {
+               renderField: (value) => {
                   // Idealmente aquí obtendrías el nombre de la casilla desde el store de usuarios
                   // Por simplicidad, mostramos el user_id y la casilla del usuario autenticado
                   // Puedes mejorar esto si tienes una relación en el backend
-                  return (
-                     <span>
-                        {authContext.persist?.auth?.username} - {authContext.persist?.auth?.casilla_place || "Sin casilla"}
-                     </span>
-                  );
+
+                  const casilla: User | null = usersContext.items.find((u) => u.id == value) ?? null;
+                  return <span>{casilla ? casilla.full_name : "Sin casilla"}</span>;
                }
             },
             {

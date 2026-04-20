@@ -2424,7 +2424,7 @@ const CustomTableInner = <T extends object>(
             fontFamily: "'DM Sans', 'Inter', system-ui, sans-serif",
             display: "flex",
             flexDirection: "column",
-            height: isFullscreen ? "100vh" : undefined,
+            height: isFullscreen ? "100vh" : "73.5vh",
             width: "100%"
          }}
       >
@@ -2463,7 +2463,7 @@ const CustomTableInner = <T extends object>(
             {/* TOOLBAR */}
             <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                <Tooltip title="Refrescar datos">
-                  <button className="btn btn-primary !w-auto" onClick={() => onRefresh()} /* C={C} */>
+                  <button className="btn btn-primary w-auto!" onClick={() => onRefresh()} /* C={C} */>
                      <icons.Fi.FiRefreshCw size={14} fontWeight={"bolder"} className="hover:rotate-90 active:rotate-[1800deg] transition-all" />
                   </button>
                </Tooltip>
