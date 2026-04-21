@@ -1,4 +1,5 @@
 export interface Project {
+   [x: string]: any;
    id: number;
    folio: number;
    assigned_district: number;
@@ -10,6 +11,8 @@ export interface Project {
    created_at?: Date | string;
    updated_at?: Date;
    deleted_at?: Date;
+
+   casilla_district?: number;
 }
 
 // export interface Project {

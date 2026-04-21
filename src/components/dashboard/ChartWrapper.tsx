@@ -81,7 +81,7 @@ const ChartWrapper: React.FC<ChartWrapperProps> = ({
          case "pie":
             return (
                <PieChart>
-                  <Pie data={data} cx="50%" cy="50%" innerRadius={60} outerRadius={80} dataKey={dataKey} nameKey={nameKey} label>
+                  <Pie data={data} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey={dataKey} nameKey={nameKey} label>
                      {data.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                      ))}

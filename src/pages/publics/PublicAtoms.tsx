@@ -150,7 +150,7 @@ export const RankingTable: React.FC<RankingTableProps> = ({ entries, maxVotes, e
             const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : null;
             return (
                <div
-                  key={e.project.id}
+                  key={`Key-${e.project.id}-${i}`}
                   style={{
                      display: "flex",
                      alignItems: "center",

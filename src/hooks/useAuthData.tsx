@@ -50,6 +50,7 @@ const useAuthData = (): AuthDataReturn => {
          casilla_place: null,
          casilla_location: null,
          casilla_active: null,
+         page_index: "",
          full_name: "",
          token: "",
          // Permisos derivados (opcional, para facilitar uso en frontend)
@@ -113,31 +114,8 @@ const useAuthData = (): AuthDataReturn => {
 
             persist?.set("auth", resAuth);
             persist?.set("token", resToken);
-            // get().setAuth(resAuth);
-            // set({
-            //    auth: {
-            //       id: resAuth?.id,
-            //       username: resAuth?.username,
-            //       email: resAuth?.email,
-            //       password: resAuth?.password,
-            //       active: resAuth?.active,
-            //       user_created_at: resAuth?.user_created_at,
-            //       role_id: resAuth?.role_id,
-            //       role_name: resAuth?.role_name,
-            //       role_description: resAuth?.role_description,
-            //       role_read: resAuth?.role_read,
-            //       role_create: resAuth?.role_create,
-            //       role_update: resAuth?.role_update,
-            //       role_delete: resAuth?.role_delete,
-            //       role_more_permissions: resAuth?.role_more_permissions,
-            //       casilla_id: resAuth?.casilla_id,
-            //       casilla_type: resAuth?.casilla_type,
-            //       casilla_district: resAuth?.casilla_district,
-            //       casilla_perimeter: resAuth?.casilla_perimeter,
-            //       casilla_place: resAuth?.casilla_place,
-            //       casilla_location: resAuth?.casilla_location,
-            // localStorage.setItem("auth", JSON.stringify(resAuth) ?? "{}");
-            // localStorage.setItem("token", JSON.stringify(resToken) ?? "");
+
+            return resAuth;
          },
 
          logout: async () => {

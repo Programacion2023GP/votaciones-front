@@ -7,6 +7,8 @@ import { formatDatetime } from "../../utils/helpers";
 import useParticipationsData from "../../hooks/useParticipationsData";
 import sAlert from "../../utils/sAlert";
 import dayjs from "dayjs";
+import { PublicSelect, RankingTable } from "../publics/PublicAtoms";
+import RankingTablesByCasillas from "../../components/dashboard/RankingTablesByCasillas";
 
 const Estadisticas: React.FC = () => {
    const participationsContext = useParticipationsData();
@@ -60,8 +62,47 @@ const Estadisticas: React.FC = () => {
       participations_by_hour,
       votes_by_district,
       null_votes_by_district,
-      top_projects_by_district
+      top_projects_by_district,
+      votes_by_casilla
    } = stats;
+
+   // const grouped = {};
+   // votes_by_casilla.forEach((item: { casilla_place: string | number; project_name: any; votes: any }) => {
+   //    if (!grouped[item.casilla_place]) grouped[item.casilla_place] = [];
+   //    grouped[item.casilla_place].push({
+   //       project: item.project_name,
+   //       votes: item.votes
+   //    });
+   // });
+   // const topProjectsData = top_projects.map((p: { project_name: string; votos: any }) => ({
+   //    name: p.project_name.length > 25 ? p.project_name.substring(0, 25) + "…" : p.project_name,
+   //    votos: p.votos,
+   //    fullName: p.project_name
+   // }));
+
+   // const [selectedDistrict, setSelectedDistrict] = useState<number | null>(null);
+
+   // // Preparar opciones de distrito a partir de `votes_by_district` o `ballots_by_district`
+   // const districtOptions = ballots_by_district.map((d) => d.casilla_district).filter((d) => d !== "Casilla Especial");
+
+   // // Obtener proyectos del distrito seleccionado
+   // const projectsByDistrict = selectedDistrict ? (top_projects_by_district[selectedDistrict] ?? []) : [];
+
+   // // Transformar a formato que espera RankingTable
+   // const rankingEntries = projectsByDistrict.map((p) => ({
+   //    project: { id: p.id, project_name: p.project_name, folio: p.id, assigned_district: selectedDistrict },
+   //    votes: p.votos
+   // }));
+
+   // Agrupar por casilla
+   const votesByCasillaGrouped = votes_by_casilla.reduce((acc: { [x: string]: any[] }, item: { casilla_place: string | number }) => {
+      if (!acc[item.casilla_place]) acc[item.casilla_place] = [];
+      acc[item.casilla_place].push(item);
+      return acc;
+   }, {});
+
+   // const casillaProyectos = votes_by_casilla.filter((v: { casilla_place: string }) => v.casilla_place === "Brittingham");
+   // const chartData = casillaProyectos.map((p: { project_name: any; votes: any }) => ({ name: p.project_name, votos: p.votes }));
 
    return (
       <div className="page">
@@ -93,11 +134,12 @@ const Estadisticas: React.FC = () => {
          </div>
          {/* Stats generales */}
          <div className="stats-grid">
-            <StatCard label="Proyectos" value={totals.projects} icon={<icons.Lu.LuFileText />} />
-            <StatCard label="Participaciones" value={totals.participations} icon={<icons.Lu.LuUsers />} />
-            <StatCard label="Boletas emitidas" value={totals.ballots} icon={<icons.Lu.LuVote />} />
-            <StatCard label="Casillas activas" value={totals.active_casillas} icon={<icons.Lu.LuMapPin />} />
-            <StatCard label="Votos nulos" value={stats.totals.null_votes} icon={<icons.Lu.LuCircleX />} />
+            <StatCard label="Proyectos" value={totals.projects.toLocaleString()} icon={<icons.Lu.LuFileText />} />
+            <StatCard label="Participaciones" value={totals.participations.toLocaleString()} icon={<icons.Lu.LuUsers />} />
+            <StatCard label="Boletas emitidas" value={totals.ballots.toLocaleString()} icon={<icons.Lu.LuVote />} />
+            <StatCard label="Casillas activas" value={totals.active_casillas.toLocaleString()} icon={<icons.Lu.LuMapPin />} />
+            <StatCard label="Votos" value={totals.total_votes.toLocaleString()} icon={<icons.Lu.LuCheckCheck />} />
+            <StatCard label="Votos nulos" value={totals.null_votes.toLocaleString()} icon={<icons.Lu.LuCircleX />} />
             {/* <StatCard label="INE" value={participations_by_type[0].total ?? 0} icon={"🪪"} />
             <StatCard label="Carta Identidad" value={participations_by_type[1].total ?? 0} icon={"📄"} /> */}
          </div>
@@ -141,8 +183,22 @@ const Estadisticas: React.FC = () => {
             totalLabel="Total participaciones"
          />
 
-         {/* Evolución temporal */}
          <ChartWrapper
+            type="bar"
+            data={ballots_by_casilla}
+            dataKey="total"
+            nameKey="casilla_place"
+            title="🗳️ Boletas por casilla"
+            layout="horizontal"
+            xLabel="Casillas"
+            yLabel="Bolletas"
+            showTotal
+            totalLabel="Total"
+            height={300}
+         />
+
+         {/* Evolución temporal */}
+         {/* <ChartWrapper
             type="line"
             data={participations_by_hour.map((h: any) => ({
                name: dayjs(h.hour).format("HH:mm"), // Ej: "14:30"
@@ -151,7 +207,7 @@ const Estadisticas: React.FC = () => {
             }))}
             dataKey="value"
             nameKey="name"
-            title="🕛 Participaciones en las últimas 24 horas (por hora)"
+            title="🕛 Participaciones por horas"
             height={300}
             tooltipFormatter={(value, name, props) => {
                // Personalizar tooltip para mostrar fecha completa
@@ -161,7 +217,7 @@ const Estadisticas: React.FC = () => {
             yLabel="Participaciones"
             showTotal
             totalLabel="Total"
-         />
+         /> */}
          {/* Top 10 proyectos y votos por distrito */}
          <div className="chart-grid mb-6">
             <ChartWrapper
@@ -191,19 +247,24 @@ const Estadisticas: React.FC = () => {
                height={300}
             />
          </div>
-         <ChartWrapper
-            type="bar"
-            data={ballots_by_casilla}
-            dataKey="total"
-            nameKey="casilla_place"
-            title="🗳️ Boletas por casilla"
-            layout="horizontal"
-            xLabel="Casillas"
-            yLabel="Bolletas"
-            showTotal
-            totalLabel="Total"
-            height={300}
-         />
+
+         {/* <ChartWrapper type="bar" data={chartData} dataKey="votos" nameKey="name" title="Proyectos votados en casilla Vergel" layout="vertical" height={300} /> */}
+
+         {/* <PublicSelect label="Distrito" value={selectedDistrict ?? ""} onChange={(e) => setSelectedDistrict(Number(e.target.value))}>
+            <option value="">Selecciona un distrito</option>
+            {districtOptions.map((d) => (
+               <option key={d} value={d}>
+                  Distrito {d}
+               </option>
+            ))}
+         </PublicSelect>
+
+         <RankingTable entries={rankingEntries} emptyMsg="No hay votos en este distrito" /> */}
+
+         {/* <TopProjectsList projects={grouped} title="Proyectos con votos (general)" /> */}
+
+         <RankingTablesByCasillas votesByCasillaGrouped={votesByCasillaGrouped} exportable={true} />
+
          <TopProjectsList projects={top_projects} title="Proyectos con votos (general)" />
          {/* // Mostrar top 10 por distrito (puedes iterar sobre las claves) */}
          {/* <div className="chart-grid mb-6"> */}

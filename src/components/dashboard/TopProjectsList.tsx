@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { icons } from "../../constant";
 
 export interface ProjectVote {
    id: number;
    project_name: string;
-   assigned_district: number;
+   assigned_district?: number;
    votos: number;
 }
 
@@ -16,6 +17,8 @@ interface TopProjectsListProps {
 }
 
 const TopProjectsList: React.FC<TopProjectsListProps> = ({ projects, title = "Proyectos más votados", exportable = true }) => {
+   const [collapsedTable, setCollapsedTable] = useState<boolean>(false);
+
    // Función para exportar a PDF
    const exportToPDF = () => {
       if (projects.length === 0) return;
@@ -107,38 +110,50 @@ const TopProjectsList: React.FC<TopProjectsListProps> = ({ projects, title = "Pr
 
    return (
       <div className="card">
-         <div className="card-header" style={{ justifyContent: "space-between" }}>
-            <span className="card-title-text">🏆 {title}</span>
+         <div className="card-header" style={{ justifyContent: "space-between", cursor: "pointer" }} onClick={() => setCollapsedTable(!collapsedTable)}>
+            <span className="card-title-text cursor-pointer flex justify-between items-center">
+               🏆 {title}&nbsp;
+               <span className={`transition-all ease-in-out ${collapsedTable && "rotate-180"}`}>
+                  <icons.Lu.LuChevronUp size={18} />
+               </span>
+            </span>
+
             {exportable && projects.length > 0 && (
                <button className="btn-secondary" style={{ padding: "4px 12px", fontSize: ".7rem" }} onClick={exportToPDF} type="button">
                   📄 Exportar PDF
                </button>
             )}
          </div>
-         <div className="card-body">
-            <div className="overflow-x-auto">
-               <table className="min-w-full">
-                  <thead>
-                     <tr>
-                        <th>#</th>
-                        <th>Proyecto</th>
-                        <th>Distrito</th>
-                        <th>Votos</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {projects.map((proj, idx) => (
-                        <tr key={proj.id}>
-                           <td className="font-bold text-guinda">{idx + 1}</td>
-                           <td>{proj.project_name}</td>
-                           <td>{proj.assigned_district}</td>
-                           <td>{proj.votos}</td>
+         {!collapsedTable && (
+            <div className="card-body">
+               <div className="overflow-x-auto">
+                  <table className="min-w-full">
+                     <thead>
+                        <tr>
+                           <th>#</th>
+                           <th>Proyecto</th>
+                           <th align="center" className="text-center">
+                              Distrito
+                           </th>
+                           <th align="right" className="text-end!">
+                              Votos
+                           </th>
                         </tr>
-                     ))}
-                  </tbody>
-               </table>
+                     </thead>
+                     <tbody>
+                        {projects.map((proj, idx) => (
+                           <tr key={proj.id}>
+                              <td className="font-bold text-guinda">{idx + 1}</td>
+                              <td>{proj.project_name}</td>
+                              <td className="text-center">{proj.assigned_district}</td>
+                              <td className="text-end">{proj.votos.toLocaleString()}</td>
+                           </tr>
+                        ))}
+                     </tbody>
+                  </table>
+               </div>
             </div>
-         </div>
+         )}
       </div>
    );
 };

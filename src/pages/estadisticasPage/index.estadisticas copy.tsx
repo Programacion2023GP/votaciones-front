@@ -63,7 +63,6 @@ const Estadisticas: React.FC = () => {
       if (totalBallots === 0) return 0;
       const totalVotes = ballotsContext.items.reduce((sum, b) => {
          const votes = [b.vote_1, b.vote_2, b.vote_3, b.vote_4, b.vote_5].filter((v) => v && v > 0).length;
-         console.log("🚀 ~ Estadisticas ~ votes:", votes);
          return sum + votes;
       }, 0);
       return (totalVotes / totalBallots).toFixed(1);

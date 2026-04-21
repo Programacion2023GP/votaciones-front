@@ -40,8 +40,10 @@ const Login: React.FC = () => {
       validationSchema,
       onSubmit: async (values) => {
          // await authContext.login(values.username, values.password);
-         await authContext.login(values.username, values.password);
-         navigate("/registro");
+         const res = await authContext.login(values.username, values.password);
+         setTimeout(() => {
+            navigate(res?.page_index ?? "/registro");
+         }, 100);
          // await authContext.request({ method: "POST", url: "login", data: { username: values.username, password: values.password }, getData: false }).then((res) => {
          //    console.log("🚀 ~ Login ~ res:", res);
          // });
