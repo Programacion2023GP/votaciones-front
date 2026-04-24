@@ -63,7 +63,7 @@ const RankingTablesByCasillas: React.FC<RankingTablesByCasillasProps> = ({ votes
          doc.text(`${displayName} • Distrito:${district}`, 14, y);
          y += 6;
 
-         const tableData = proyectos.map((p) => [p.folio?.toString() ?? "-", `${p.project_name || ""}`, p.votes.toString()]);
+         const tableData = proyectos.map((p) => [p.folio?.toString() ?? "-", `${p.project_name || ""}`, p.votes.toLocaleString()]);
 
          autoTable(doc, {
             startY: y,
@@ -115,6 +115,8 @@ const RankingTablesByCasillas: React.FC<RankingTablesByCasillasProps> = ({ votes
                   {Object.entries(votesByCasillaGrouped).map(([casilla, proyectos]) => {
                      const isCollapsed = collapsed[casilla] ?? false;
                      const displayName = casilla === "null" ? "Casilla sin nombre" : casilla;
+                     const votesByProject = proyectos.map((p) => Number(p.votes)).filter((v) => !isNaN(v));
+
                      return (
                         <div key={casilla} className="card mb-4">
                            <div
@@ -122,7 +124,10 @@ const RankingTablesByCasillas: React.FC<RankingTablesByCasillasProps> = ({ votes
                               onClick={() => toggleCollapse(casilla)}
                               style={{ cursor: "pointer" }}
                            >
-                              <span className="card-title-text">🏛️ {displayName}</span>&nbsp;
+                              <span className="card-title-text">🏛️ {displayName}</span>
+                              <span className="badge badge-primary ml-2" style={{ marginInline: 5 }}>
+                                 {"Votos"}: {Number(votesByProject.reduce((a, b) => a + b, 0)).toLocaleString()}
+                              </span>
                               <span className={`transition-all ease-in-out ${isCollapsed && "rotate-180"}`}>
                                  <icons.Lu.LuChevronUp size={18} />
                               </span>

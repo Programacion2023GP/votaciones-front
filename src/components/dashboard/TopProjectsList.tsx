@@ -45,7 +45,7 @@ const TopProjectsList: React.FC<TopProjectsListProps> = ({ projects, title = "Pr
             (proj.project_name.split(" - ")?.[0] ?? "0").toString(),
             `${proj.project_name.split(" - ")?.[1]} - ${proj.project_name.split(" - ")?.[2]}`,
             proj?.assigned_district.toString() ?? "-",
-            proj.votos.toString()
+            proj.votos.toLocaleString()
          ]);
 
          // Generar tabla
